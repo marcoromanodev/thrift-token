@@ -1,0 +1,152 @@
+
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(to right, #1d0b2f, #35134a);
+    color: white;
+    text-align: center;
+}
+
+/* Logo */
+.logo img {
+    height: 100px;
+    margin: 20px auto;
+    display: block;
+}
+
+/* Wallet button */
+.wallet-button {
+    background-color: #c69cd9;
+    border: none;
+    color: #fff;
+    padding: 10px 20px;
+    margin: 1rem auto;
+    font-size: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+.wallet-button:hover {
+    background-color: #b17cc7;
+}
+
+/* Dropdown menu */
+.dropdown-arrow {
+    font-size: 2rem;
+    cursor: pointer;
+    color: #c69cd9;
+}
+.dropdown-menu {
+    display: none;
+    margin-top: 1rem;
+}
+.dropdown-menu ul {
+    list-style: none;
+    padding: 0;
+}
+.dropdown-menu ul li {
+    display: inline-block;
+    margin: 0 1rem;
+}
+.dropdown-menu ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+.dropdown-menu ul li a:hover {
+    color: #c69cd9;
+}
+
+/* Cyber Grid behind countdown */
+#hero {
+    position: relative;
+    padding: 4rem 1rem;
+}
+#hero::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-image: repeating-linear-gradient(0deg, rgba(255,255,255,0.05) 1px, transparent 1px, transparent 20px),
+                      repeating-linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px, transparent 20px);
+    z-index: 0;
+}
+#countdown {
+    font-size: 2rem;
+    color: #fff;
+    z-index: 1;
+    position: relative;
+}
+
+/* Features & Roadmap */
+.features-grid, .steps {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin: 2rem auto;
+    max-width: 1000px;
+}
+.feature-card, .step {
+    background: rgba(255,255,255,0.05);
+    padding: 1rem;
+    border-radius: 10px;
+    flex: 1 1 200px;
+}
+.roadmap-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 2rem auto;
+    animation: fadeInUp 2s ease-in-out forwards;
+}
+.roadmap-phase {
+    background: rgba(255,255,255,0.07);
+    padding: 1rem;
+    margin: 1rem;
+    border-left: 5px solid #c69cd9;
+    width: 80%;
+    text-align: left;
+    animation: pulse 2s ease infinite;
+}
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.01); }
+}
+
+/* Footer */
+footer {
+    background: #151515;
+    padding: 1rem;
+    color: #aaa;
+}
+.footer-links {
+    margin-bottom: 0.5rem;
+}
+.footer-links a {
+    margin: 0 1rem;
+    color: #c69cd9;
+    font-size: 1.2rem;
+}
+.footer-links a:hover {
+    color: #fff;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .features-grid, .steps {
+        flex-direction: column;
+    }
+    .dropdown-menu ul li {
+        display: block;
+        margin: 0.5rem 0;
+    }
+}
