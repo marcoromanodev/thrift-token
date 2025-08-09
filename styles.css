@@ -7,8 +7,8 @@
 }
 body {
     font-family: 'Arial', sans-serif;
-    background: linear-gradient(to right, #1d0b2f, #35134a);
-    color: white;
+    background-color: #ffffff;
+    color: #000000;
     text-align: center;
 }
 
@@ -54,7 +54,7 @@ body {
     margin: 0 1rem;
 }
 .dropdown-menu ul li a {
-    color: #fff;
+    color: #000;
     text-decoration: none;
     font-weight: bold;
 }
@@ -77,7 +77,7 @@ body {
 }
 #countdown {
     font-size: 2rem;
-    color: #fff;
+    color: #000;
     z-index: 1;
     position: relative;
 }
