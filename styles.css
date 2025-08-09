@@ -113,6 +113,17 @@ body {
     text-align: left;
     animation: pulse 2s ease infinite;
 }
+
+@media (min-width: 769px) {
+    .roadmap-container {
+        max-width: 800px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    .roadmap-phase {
+        text-align: center;
+    }
+}
 @keyframes fadeInUp {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
@@ -125,7 +136,7 @@ body {
 /* Footer */
 footer {
     background: #151515;
-    padding: 1rem;
+    padding: 1rem 1rem 2rem;
     color: #aaa;
 }
 .footer-links {
@@ -133,11 +144,11 @@ footer {
 }
 .footer-links a {
     margin: 0 1rem;
-    color: #c69cd9;
-    font-size: 1.2rem;
+    color: #800080;
+    font-size: 1.5rem;
 }
 .footer-links a:hover {
-    color: #800080;
+    color: #c69cd9;
 }
 
 /* Responsive */

@@ -1,7 +1,7 @@
 
 // Countdown Timer
 const countdown = document.getElementById("countdown");
-const launchDate = new Date("2025-12-01T00:00:00").getTime();
+const launchDate = new Date("2025-09-09T00:00:00").getTime();
 
 function updateCountdown() {
     const now = new Date().getTime();
