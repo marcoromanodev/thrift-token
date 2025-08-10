@@ -259,6 +259,34 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+    const navLinks = document.querySelectorAll('#dropdown-menu a');
+    const sections = Array.from(navLinks).map(link => document.querySelector(link.getAttribute('href')));
+
+    function setActiveLink(link) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        link.classList.add('active');
+    }
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => setActiveLink(link));
+    });
+
+    function highlightOnScroll() {
+        const scrollPos = window.scrollY + window.innerHeight / 2;
+        const index = sections.findIndex(sec => sec.offsetTop <= scrollPos && (sec.offsetTop + sec.offsetHeight) > scrollPos);
+        if (index !== -1) {
+            setActiveLink(navLinks[index]);
+        }
+    }
+
+    window.addEventListener('scroll', () => {
+        if (document.getElementById('dropdown-menu').style.display === 'block') {
+            highlightOnScroll();
+        }
+    });
+
+    highlightOnScroll();
+
     const roadmapPhases = document.querySelectorAll(".roadmap-phase");
     const phaseObserver = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
