@@ -407,6 +407,16 @@ section p::before {
     white-space: nowrap;
 }
 
+@media (max-width: 600px) {
+    .total-supply {
+        font-size: 1rem;
+        display: flex;
+        flex-wrap: wrap;
+        max-width: 100%;
+        white-space: normal;
+    }
+}
+
 .allocation-title {
     display: inline-flex;
     align-items: center;
@@ -414,8 +424,8 @@ section p::before {
 }
 
 .allocation-icon {
-    width: 24px;
-    height: 24px;
+    font-size: 1.5rem;
+    color: #c69cd9;
 }
 .roadmap-container {
     position: relative;
