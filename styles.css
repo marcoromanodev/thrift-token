@@ -156,10 +156,16 @@ section p::before {
     color: #000;
     z-index: 1;
     position: relative;
+    white-space: nowrap;
 }
 
 .count-num {
     font-weight: bold;
+    margin-right: 0.3rem;
+}
+
+.count-num:last-child {
+    margin-right: 0;
 }
 
 @media (max-width: 600px) {
