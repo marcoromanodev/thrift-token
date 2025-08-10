@@ -12,18 +12,47 @@ body {
     text-align: center;
 }
 
+section {
+    padding: 4rem 1rem;
+}
+
 section p {
-    max-width: 800px;
+    max-width: 600px;
     margin: 1rem auto;
     line-height: 1.6;
+}
+
+section p::before {
+    font-family: "Font Awesome 6 Free";
+    font-weight: 900;
+    content: "\f105";
+    color: #c69cd9;
+    margin-right: 0.5rem;
 }
 
 .section-list {
     list-style: disc;
     margin: 1rem auto;
-    max-width: 800px;
+    max-width: 600px;
     text-align: left;
     padding-left: 1.5rem;
+}
+
+.section-list li::marker {
+    color: #c69cd9;
+}
+
+.section-icon {
+    color: #c69cd9;
+    margin-right: 0.5rem;
+}
+
+@media (min-width: 769px) {
+    section {
+        max-width: 900px;
+        margin-left: auto;
+        margin-right: auto;
+    }
 }
 
 /* Logo */
