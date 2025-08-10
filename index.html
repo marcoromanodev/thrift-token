@@ -18,21 +18,6 @@
     <script defer src="script.js"></script>
 </head>
 <body>
-    <div class="language-container">
-        <button id="languageButton">Language</button>
-        <div id="google_translate_element" class="language-dropdown"></div>
-        <button id="chatbotToggle" class="chatbot-toggle" aria-label="Open chat">
-            <i class="fa-solid fa-comments"></i>
-        </button>
-    </div>
-    <div id="chatbot" class="chatbot hidden">
-        <div class="chatbot-header">AI Assistant <span id="chatbotClose" class="chatbot-close">&times;</span></div>
-        <div id="chatbotMessages" class="chatbot-messages"></div>
-        <div class="chatbot-input">
-            <input type="text" id="chatbotInput" placeholder="Ask a question..."/>
-            <button id="chatbotSend">Send</button>
-        </div>
-    </div>
     <header>
         <div class="logo">
             <img src="logo/thrifttoken.png" alt="Thrift Token Logo" />
@@ -54,6 +39,21 @@
         </div>
         <button id="connectWallet" class="wallet-button">Connect Wallet</button>
     </header>
+    <div class="language-container">
+        <button id="languageButton">Language</button>
+        <div id="google_translate_element" class="language-dropdown"></div>
+        <button id="chatbotToggle" class="chatbot-toggle" aria-label="Open chat">
+            <i class="fa-solid fa-comments"></i>
+        </button>
+    </div>
+    <div id="chatbot" class="chatbot hidden">
+        <div class="chatbot-header">AI Assistant <span id="chatbotClose" class="chatbot-close">&times;</span></div>
+        <div id="chatbotMessages" class="chatbot-messages"></div>
+        <div class="chatbot-input">
+            <input type="text" id="chatbotInput" placeholder="Ask a question..."/>
+            <button id="chatbotSend">Send</button>
+        </div>
+    </div>
 
     <section id="hero">
         <div id="countdown" class="countdown"></div>
