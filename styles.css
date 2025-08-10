@@ -504,6 +504,11 @@ footer {
     margin-top: 0.5rem;
 }
 
+/* Extra spacing between consecutive graphs */
+.graph-source + h3 {
+    margin-top: 3rem;
+}
+
 /* Chatbot */
 .chatbot-toggle {
     display: block;
