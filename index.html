@@ -226,7 +226,7 @@
 
     <section id="tokenomics">
         <h2><i class="fa-solid fa-coins section-icon" aria-hidden="true"></i>Tokenomics</h2>
-        <p class="total-supply"><img src="coins/thrift.png" alt="Thrift Token" class="supply-icon"/><span>Total Supply: 92,000,000 thrift tokens.</span></p>
+        <p class="total-supply"><span>Total Supply: 92,000,000 thrift tokens.</span><img src="coins/thrift.png" alt="Thrift Token" class="supply-icon"/></p>
         <div class="token-equation">
             <div class="eq-part">
                 <span class="eq-number">92,000,000,000</span>
@@ -243,7 +243,7 @@
                 <span class="eq-label">total tokens</span>
             </div>
         </div>
-        <h3>Allocation</h3>
+        <h3 class="allocation-title"><img src="coins/thrift.png" alt="" class="allocation-icon"/>Allocation</h3>
         <div class="allocation-graph">
             <div class="allocation-bar" style="--percent:50; --bar-color:#ffcc00;">
                 <span>ICO &amp; Community Rewards - 50%</span>
@@ -261,31 +261,33 @@
                 <span>Reserve Fund - 5%</span>
             </div>
         </div>
-        <div class="token-utility-wrapper">
-            <h3 class="token-utility-title"><i class="fa-solid fa-star token-title-icon cartoon" aria-hidden="true"></i>Token Utility</h3>
-            <p class="tether-info">Each Thrift Token is tethered to the total count of unwanted clothing materials on planet Earth, transforming global waste into digital value.</p>
-            <div class="token-utility">
-                <div class="utility-item">
-                    <i class="fa-solid fa-recycle utility-icon" aria-hidden="true"></i>
-                    <p>Earn tokens by recycling garments.</p>
-                </div>
-                <div class="utility-item">
-                    <i class="fa-solid fa-cart-shopping utility-icon" aria-hidden="true"></i>
-                    <p>Spend tokens on thrift items or recycling services.</p>
-                </div>
-                <div class="utility-item">
-                    <i class="fa-solid fa-hand-holding-heart utility-icon" aria-hidden="true"></i>
-                    <p>Support redistribution efforts for underserved populations.</p>
+        <div class="token-graphs">
+            <div class="token-utility-wrapper">
+                <h3 class="token-utility-title"><i class="fa-solid fa-star token-title-icon cartoon" aria-hidden="true"></i>Token Utility</h3>
+                <p class="tether-info">Each Thrift Token is tethered to the total count of unwanted clothing materials on planet Earth, transforming global waste into digital value.</p>
+                <div class="token-utility">
+                    <div class="utility-item">
+                        <i class="fa-solid fa-recycle utility-icon" aria-hidden="true"></i>
+                        <p>Earn tokens by recycling garments.</p>
+                    </div>
+                    <div class="utility-item">
+                        <i class="fa-solid fa-cart-shopping utility-icon" aria-hidden="true"></i>
+                        <p>Spend tokens on thrift items or recycling services.</p>
+                    </div>
+                    <div class="utility-item">
+                        <i class="fa-solid fa-hand-holding-heart utility-icon" aria-hidden="true"></i>
+                        <p>Support redistribution efforts for underserved populations.</p>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="ico-progress-wrapper">
-            <h3 class="ico-progress-title"><i class="fa-solid fa-chart-pie token-title-icon cartoon" aria-hidden="true"></i>ICO Progress</h3>
-            <div class="ico-progress-chart-container">
-                <canvas id="icoProgressChart"></canvas>
+            <div class="ico-progress-wrapper">
+                <h3 class="ico-progress-title"><i class="fa-solid fa-chart-pie token-title-icon cartoon" aria-hidden="true"></i>ICO Progress</h3>
+                <div class="ico-progress-chart-container">
+                    <canvas id="icoProgressChart"></canvas>
+                </div>
+                <p class="ico-progress-text">Raised: <span id="icoRaisedAmount">$0</span> / $20,000,000</p>
+                <p class="ico-goal-note">ICO Goal: $20 million to fund R&amp;D, dApp development, and hub infrastructure.</p>
             </div>
-            <p class="ico-progress-text">Raised: <span id="icoRaisedAmount">$0</span> / $20,000,000</p>
-            <p class="ico-goal-note">ICO Goal: $20 million to fund R&amp;D, dApp development, and hub infrastructure.</p>
         </div>
     </section>
 

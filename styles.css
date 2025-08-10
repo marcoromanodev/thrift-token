@@ -386,7 +386,7 @@ section p::before {
 .supply-icon {
     width: 24px;
     height: 24px;
-    margin-right: 0.3rem;
+    margin-left: 0.3rem;
     vertical-align: middle;
     animation: floatCoin 3s ease-in-out infinite, sparkleCoin 2s ease-in-out infinite;
 }
@@ -404,6 +404,18 @@ section p::before {
     font-size: 1.2rem;
     font-weight: bold;
     max-width: fit-content;
+    white-space: nowrap;
+}
+
+.allocation-title {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.allocation-icon {
+    width: 24px;
+    height: 24px;
 }
 .roadmap-container {
     position: relative;
@@ -542,7 +554,8 @@ footer {
     border-radius: 12px;
     padding: 2rem 1rem;
     margin: 2rem auto;
-    max-width: 700px;
+    width: 100%;
+    max-width: 350px;
     animation: popIn 1s ease;
 }
 
@@ -607,7 +620,8 @@ footer {
     border-radius: 12px;
     padding: 2rem 1rem;
     margin: 2rem auto;
-    max-width: 700px;
+    width: 100%;
+    max-width: 350px;
     text-align: center;
     animation: popIn 1s ease;
 }
@@ -623,8 +637,15 @@ footer {
 }
 
 .ico-progress-chart-container {
-    max-width: 400px;
+    max-width: 100%;
     margin: 0 auto;
+}
+
+.token-graphs {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
 }
 
 .ico-progress-text {
@@ -735,21 +756,31 @@ footer {
     padding: 1rem;
 }
 
-.chart-container canvas,
-.ico-progress-chart-container canvas {
+.chart-container canvas {
     width: 100%;
     height: 300px;
 }
 
-@media (min-width: 1024px) {
-    .chart-container,
-    .ico-progress-chart-container {
-        max-width: 800px;
+.ico-progress-chart-container canvas {
+    width: 100%;
+    height: 250px;
+}
+
+@media (min-width: 768px) {
+    .token-graphs {
+        flex-direction: row;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 600px) {
+    .token-utility-wrapper,
+    .ico-progress-wrapper {
+        max-width: 300px;
     }
 
-    .chart-container canvas,
     .ico-progress-chart-container canvas {
-        height: 400px;
+        height: 200px;
     }
 }
 
