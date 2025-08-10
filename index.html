@@ -22,6 +22,7 @@
         <div class="logo">
             <img src="logo/thrifttoken.png" alt="Thrift Token Logo" />
         </div>
+        <button id="connectWallet" class="wallet-button">Connect Wallet</button>
         <div class="dropdown-arrow" onclick="toggleMenu()">&#9660;</div>
         <div class="dropdown-menu" id="dropdown-menu">
             <ul>
@@ -37,15 +38,14 @@
                 <li><a href="#roadmap">Roadmap</a></li>
             </ul>
         </div>
-        <button id="connectWallet" class="wallet-button">Connect Wallet</button>
     </header>
     <div class="language-container">
         <button id="languageButton">Language</button>
         <div id="google_translate_element" class="language-dropdown"></div>
-        <button id="chatbotToggle" class="chatbot-toggle" aria-label="Open chat">
-            <i class="fa-solid fa-comments"></i>
-        </button>
     </div>
+    <button id="chatbotToggle" class="chatbot-toggle" aria-label="Open chat">
+        <i class="fa-solid fa-comments"></i>
+    </button>
     <div id="chatbot" class="chatbot hidden">
         <div class="chatbot-header">AI Assistant <span id="chatbotClose" class="chatbot-close">&times;</span></div>
         <div id="chatbotMessages" class="chatbot-messages"></div>
