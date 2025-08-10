@@ -386,9 +386,29 @@ document.addEventListener("DOMContentLoaded", function () {
 
     roadmapPhases.forEach((phase) => phaseObserver.observe(phase));
 
-    initFiberComparisonChart();
-    initPolyesterChart();
-    initTugOfWar();
-    initICOProgressChart();
     initCoinRain();
+
+    try {
+        initFiberComparisonChart();
+    } catch (e) {
+        console.error('initFiberComparisonChart failed', e);
+    }
+
+    try {
+        initPolyesterChart();
+    } catch (e) {
+        console.error('initPolyesterChart failed', e);
+    }
+
+    try {
+        initTugOfWar();
+    } catch (e) {
+        console.error('initTugOfWar failed', e);
+    }
+
+    try {
+        initICOProgressChart();
+    } catch (e) {
+        console.error('initICOProgressChart failed', e);
+    }
 });
