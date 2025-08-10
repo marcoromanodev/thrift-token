@@ -328,7 +328,7 @@ document.addEventListener("DOMContentLoaded", function () {
             const targetEl = document.getElementById(targetId);
             const headerOffset = document.querySelector('header').offsetHeight;
             const elementPos = targetEl.getBoundingClientRect().top + window.pageYOffset;
-            const offsetPos = elementPos - headerOffset;
+            const offsetPos = Math.max(elementPos - headerOffset, 0);
             window.scrollTo({ top: offsetPos, behavior: 'smooth' });
             setActiveLink(link);
             document.getElementById('dropdown-menu').style.display = 'none';
@@ -343,18 +343,17 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     function highlightOnScroll() {
-        const scrollPos = window.scrollY + window.innerHeight / 2;
-        const index = sections.findIndex(sec => sec.offsetTop <= scrollPos && (sec.offsetTop + sec.offsetHeight) > scrollPos);
+        const headerOffset = document.querySelector('header').offsetHeight;
+        const scrollPos = window.scrollY + headerOffset;
+        const index = sections.findIndex(sec => scrollPos >= sec.offsetTop && scrollPos < sec.offsetTop + sec.offsetHeight);
         if (index !== -1) {
             setActiveLink(navLinks[index]);
+        } else {
+            setActiveLink(navLinks[0]);
         }
     }
 
-    window.addEventListener('scroll', () => {
-        if (document.getElementById('dropdown-menu').style.display === 'block') {
-            highlightOnScroll();
-        }
-    });
+    window.addEventListener('scroll', highlightOnScroll);
 
     highlightOnScroll();
 
