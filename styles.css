@@ -585,6 +585,43 @@ footer {
 .utility-item:nth-child(2) .utility-icon { animation-delay: 0.3s; }
 .utility-item:nth-child(3) .utility-icon { animation-delay: 0.6s; }
 
+.ico-progress-wrapper {
+    background: #e6f7ff;
+    border: 4px solid #ffcc00;
+    box-shadow: 6px 6px 0 #000;
+    border-radius: 12px;
+    padding: 2rem 1rem;
+    margin: 2rem auto;
+    max-width: 700px;
+    text-align: center;
+    animation: popIn 1s ease;
+}
+
+.ico-progress-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 2rem;
+    color: #ffcc00;
+    margin-bottom: 1rem;
+}
+
+.ico-progress-chart-container {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.ico-progress-text {
+    font-weight: bold;
+    margin-top: 1rem;
+}
+
+.ico-goal-note {
+    font-style: italic;
+    margin-top: 0.5rem;
+}
+
 @keyframes bounce {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-10px); }
