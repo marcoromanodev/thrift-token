@@ -212,6 +212,7 @@ section > p:not(.graph-source):not(.total-supply)::before {
     height: 60px;
     margin: 0;
     display: block;
+    color: #c69cd9;
     animation: floatCoin 3s ease-in-out infinite, sparkleCoin 2s ease-in-out infinite;
 }
 
@@ -449,7 +450,12 @@ section > p:not(.graph-source):not(.total-supply)::before {
     height: 24px;
     margin-left: 0.3rem;
     vertical-align: middle;
+    color: #c69cd9;
     animation: floatCoin 3s ease-in-out infinite, sparkleCoin 2s ease-in-out infinite;
+}
+
+.thrift-coin {
+    color: #c69cd9;
 }
 
 .total-supply {
