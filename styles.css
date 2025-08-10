@@ -213,7 +213,7 @@ section p::before {
     align-items: flex-start;
     gap: 0.5rem;
     margin: 0;
-    z-index: 1001;
+    z-index: 10000;
 }
 .language-container button {
     background-color: #c69cd9;
@@ -389,6 +389,21 @@ section p::before {
     margin-right: 0.3rem;
     vertical-align: middle;
     animation: floatCoin 3s ease-in-out infinite, sparkleCoin 2s ease-in-out infinite;
+}
+
+.total-supply {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    background: #fff;
+    border: 2px solid #c69cd9;
+    box-shadow: 4px 4px 0 #000;
+    padding: 0.5rem 1rem;
+    margin: 1rem auto;
+    font-size: 1.2rem;
+    font-weight: bold;
+    max-width: fit-content;
 }
 .roadmap-container {
     position: relative;
@@ -710,7 +725,7 @@ footer {
     background-color: #b17cc7;
 }
 
-/* Polyester graph */
+/* Graphs */
 .chart-container {
     max-width: 600px;
     margin: 1rem auto;
@@ -720,9 +735,22 @@ footer {
     padding: 1rem;
 }
 
-#polyesterChart {
+.chart-container canvas,
+.ico-progress-chart-container canvas {
     width: 100%;
     height: 300px;
+}
+
+@media (min-width: 1024px) {
+    .chart-container,
+    .ico-progress-chart-container {
+        max-width: 800px;
+    }
+
+    .chart-container canvas,
+    .ico-progress-chart-container canvas {
+        height: 400px;
+    }
 }
 
 .graph-source {
@@ -747,6 +775,7 @@ footer {
     padding: 5px;
     border-radius: 50%;
     cursor: pointer;
+    z-index: 10001;
 }
 
 .chatbot {
@@ -761,7 +790,7 @@ footer {
     box-shadow: 4px 4px 0 #000;
     display: flex;
     flex-direction: column;
-    z-index: 1000;
+    z-index: 10002;
 }
 
 .chatbot.hidden {
