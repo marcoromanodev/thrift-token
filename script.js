@@ -259,6 +259,20 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+    const roadmapPhases = document.querySelectorAll(".roadmap-phase");
+    const phaseObserver = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                const index = Array.from(roadmapPhases).indexOf(entry.target);
+                entry.target.style.transitionDelay = `${index * 0.3}s`;
+                entry.target.classList.add("visible");
+                phaseObserver.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    roadmapPhases.forEach((phase) => phaseObserver.observe(phase));
+
     initFiberComparisonChart();
     initPolyesterChart();
     initTugOfWar();

@@ -384,20 +384,52 @@ section p::before {
     animation: floatCoin 3s ease-in-out infinite, sparkleCoin 2s ease-in-out infinite;
 }
 .roadmap-container {
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     margin: 2rem auto;
-    animation: fadeInUp 2s ease-in-out forwards;
+    padding: 2rem 0;
+}
+.roadmap-container::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: #c69cd9;
+    transform: translateX(-50%);
 }
 .roadmap-phase {
+    position: relative;
     background: rgba(255,255,255,0.07);
-    padding: 1rem;
-    margin: 1rem;
-    border-left: 5px solid #c69cd9;
+    padding: 1rem 2rem;
+    margin: 2rem 0;
     width: 80%;
-    text-align: left;
-    animation: pulse 2s ease infinite;
+    max-width: 500px;
+    text-align: center;
+    border: 2px solid #c69cd9;
+    border-radius: 8px;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+.roadmap-phase::before {
+    content: "";
+    position: absolute;
+    top: -16px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 3px solid #c69cd9;
+}
+.roadmap-phase.visible {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 @media (min-width: 769px) {
@@ -405,9 +437,6 @@ section p::before {
         max-width: 800px;
         margin-left: auto;
         margin-right: auto;
-    }
-    .roadmap-phase {
-        text-align: center;
     }
 }
 @keyframes fadeInUp {
