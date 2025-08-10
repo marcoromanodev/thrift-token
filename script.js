@@ -229,6 +229,21 @@ async function initICOProgressChart() {
     setInterval(updateChart, 5000);
 }
 
+function initCoinRain() {
+    const container = document.querySelector('.coin-container');
+    if (!container) return;
+
+    function spawnCoin() {
+        const coin = document.createElement('div');
+        coin.className = 'coin';
+        coin.style.left = Math.random() * 100 + '%';
+        container.appendChild(coin);
+        coin.addEventListener('animationend', () => coin.remove());
+    }
+
+    setInterval(spawnCoin, 80);
+}
+
 // MetaMask Wallet Connection
 document.addEventListener("DOMContentLoaded", function () {
     const connectWalletBtn = document.getElementById("connectWallet");
@@ -375,4 +390,5 @@ document.addEventListener("DOMContentLoaded", function () {
     initPolyesterChart();
     initTugOfWar();
     initICOProgressChart();
+    initCoinRain();
 });
