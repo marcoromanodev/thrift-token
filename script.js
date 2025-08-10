@@ -177,6 +177,58 @@ async function initFiberComparisonChart() {
     });
 }
 
+async function initICOProgressChart() {
+    const canvas = document.getElementById("icoProgressChart");
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    const goal = 20_000_000;
+    let chart;
+
+    async function fetchRaised() {
+        try {
+            const response = await fetch("https://api.thrifttoken.org/ico-progress");
+            const data = await response.json();
+            return data.raised;
+        } catch (err) {
+            return Math.random() * goal * 0.8;
+        }
+    }
+
+    async function updateChart() {
+        const raised = await fetchRaised();
+        const remaining = Math.max(goal - raised, 0);
+        if (!chart) {
+            chart = new Chart(ctx, {
+                type: "doughnut",
+                data: {
+                    labels: ["Raised", "Remaining"],
+                    datasets: [{
+                        data: [raised, remaining],
+                        backgroundColor: ["#ff66aa", "#ffffff"],
+                        borderColor: "#000",
+                        borderWidth: 4,
+                    }],
+                },
+                options: {
+                    responsive: true,
+                    plugins: { legend: { position: "bottom" } },
+                    animation: { animateScale: true, animateRotate: true },
+                },
+            });
+        } else {
+            chart.data.datasets[0].data = [raised, remaining];
+            chart.update();
+        }
+        const amountEl = document.getElementById("icoRaisedAmount");
+        if (amountEl) {
+            amountEl.textContent = `$${Math.round(raised).toLocaleString()}`;
+        }
+    }
+
+    updateChart();
+    setInterval(updateChart, 5000);
+}
+
 // MetaMask Wallet Connection
 document.addEventListener("DOMContentLoaded", function () {
     const connectWalletBtn = document.getElementById("connectWallet");
@@ -304,4 +356,5 @@ document.addEventListener("DOMContentLoaded", function () {
     initFiberComparisonChart();
     initPolyesterChart();
     initTugOfWar();
+    initICOProgressChart();
 });
