@@ -55,7 +55,7 @@ async function initPolyesterChart() {
             labels: [],
             datasets: [
                 {
-                    label: "Unwanted Clothing Items (millions)",
+                    label: "Unwanted Clothing Items (annual count, millions)",
                     data: [],
                     borderColor: "#c69cd9",
                     backgroundColor: "rgba(198,156,217,0.2)",
@@ -68,11 +68,11 @@ async function initPolyesterChart() {
             responsive: true,
             plugins: {
                 legend: { position: "top" },
-                title: { display: true, text: "Unwanted Clothing Items in Thrifts (Live)" }
+                title: { display: true, text: "Unwanted Clothing Items Trajectory (Annual Count)" }
             },
             scales: {
-                x: { title: { display: true, text: "Time" } },
-                y: { beginAtZero: true, title: { display: true, text: "Items (millions)" } }
+                x: { title: { display: true, text: "Year" } },
+                y: { beginAtZero: true, title: { display: true, text: "Items (millions per year)" } }
             }
         }
     });
@@ -87,10 +87,10 @@ async function initPolyesterChart() {
         }
     }
 
+    let year = new Date().getFullYear();
     async function updateChart() {
         const count = await fetchCount();
-        const now = new Date().toLocaleTimeString();
-        chart.data.labels.push(now);
+        chart.data.labels.push(year++);
         chart.data.datasets[0].data.push(count);
         if (chart.data.labels.length > 20) {
             chart.data.labels.shift();
@@ -124,7 +124,7 @@ async function initFiberComparisonChart() {
             labels: ["Polyester", "Cotton", "Denim", "Leather"],
             datasets: [
                 {
-                    label: "Landfill Waste (million tons)",
+                    label: "Annual Landfill Waste (million tons)",
                     data: [stats.polyester, stats.cotton, stats.denim, stats.leather],
                     backgroundColor: ["#c69cd9", "#ffcc00", "#66ccff", "#99e26b"],
                 },
@@ -134,10 +134,10 @@ async function initFiberComparisonChart() {
             responsive: true,
             plugins: {
                 legend: { display: false },
-                title: { display: true, text: "Landfill Textile Waste by Material (Live)" },
+                title: { display: true, text: "Annual Landfill Textile Waste by Material" },
             },
             scales: {
-                y: { beginAtZero: true, title: { display: true, text: "Million tons" } },
+                y: { beginAtZero: true, title: { display: true, text: "Million tons per year" } },
             },
         },
     });
@@ -225,6 +225,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    initPolyesterChart();
     initFiberComparisonChart();
+    initPolyesterChart();
 });
