@@ -44,6 +44,53 @@ function toggleMenu() {
     menu.style.display = menu.style.display === "block" ? "none" : "block";
 }
 
+async function loadPolyesterData() {
+    try {
+        const response = await fetch("https://example.com/polyester-landfill-data");
+        const data = await response.json();
+        return {
+            labels: data.map(item => item.year),
+            values: data.map(item => item.tons)
+        };
+    } catch (err) {
+        console.error("Polyester data load failed", err);
+        return { labels: [], values: [] };
+    }
+}
+
+async function initPolyesterChart() {
+    const ctx = document.getElementById("polyesterChart");
+    if (!ctx) return;
+
+    const { labels, values } = await loadPolyesterData();
+    const chart = new Chart(ctx, {
+        type: "line",
+        data: {
+            labels,
+            datasets: [{
+                label: "Polyester Waste (tons)",
+                data: values,
+                borderColor: "#c69cd9",
+                backgroundColor: "rgba(198,156,217,0.2)",
+                borderWidth: 4,
+                tension: 0.4
+            }]
+        },
+        options: {
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+
+    setInterval(async () => {
+        const { labels: newLabels, values: newValues } = await loadPolyesterData();
+        chart.data.labels = newLabels;
+        chart.data.datasets[0].data = newValues;
+        chart.update();
+    }, 60000);
+}
+
 // MetaMask Wallet Connection
 document.addEventListener("DOMContentLoaded", function () {
     const connectWalletBtn = document.getElementById("connectWallet");
@@ -111,7 +158,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     chatToggle?.addEventListener("click", () => {
         chatBox.classList.toggle("hidden");
-        if (!chatBox.classList.contains("hidden")) {
+        if (!chatBox.classList.contains("hidden") && !/Mobi|Android/i.test(navigator.userAgent)) {
             chatInput.focus();
         }
     });
@@ -125,4 +172,6 @@ document.addEventListener("DOMContentLoaded", function () {
             sendChat();
         }
     });
+
+    initPolyesterChart();
 });

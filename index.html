@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
     <title>Thrift Token - Redefining Circular Fashion</title>
     <link rel="stylesheet" href="styles.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"/>
@@ -14,6 +14,7 @@
     <link rel="icon" type="image/png" sizes="512x512" href="android-chrome-512x512.png"/>
     <link rel="manifest" href="site.webmanifest"/>
     <link rel="icon" type="image/x-icon" href="favicon.ico"/>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js" defer></script>
     <script defer src="script.js"></script>
 </head>
 <body>
@@ -61,6 +62,14 @@
     <section id="about">
         <h2><i class="fa-solid fa-shirt section-icon" aria-hidden="true"></i>Transforming Fashion Waste</h2>
         <p>The global fashion industry produces over 92 million tons of textile waste annually, a number projected to grow by 60% by 2030. Thrift Token integrates advanced fiber separation technologies, blockchain transparency, and a gamified experience to build a circular textile economy that reduces waste and addresses clothing inequality.</p>
+    </section>
+
+    <section id="polyester">
+        <h2><i class="fa-solid fa-chart-line section-icon" aria-hidden="true"></i>Polyester in Landfills</h2>
+        <div class="chart-container">
+            <canvas id="polyesterChart"></canvas>
+        </div>
+        <p class="graph-source">Source: <a href="https://example.com/polyester-landfill-data" target="_blank" rel="noopener">Global Polyester Landfill Data</a></p>
     </section>
 
     <section id="how-to-buy">
