@@ -44,51 +44,76 @@ function toggleMenu() {
     menu.style.display = menu.style.display === "block" ? "none" : "block";
 }
 
-async function loadPolyesterData() {
-    try {
-        const response = await fetch("https://example.com/polyester-landfill-data");
-        const data = await response.json();
-        return {
-            labels: data.map(item => item.year),
-            values: data.map(item => item.tons)
-        };
-    } catch (err) {
-        console.error("Polyester data load failed", err);
-        return { labels: [], values: [] };
-    }
+function generateMaterialData() {
+    const currentYear = new Date().getFullYear();
+    const startYear = currentYear - 49;
+    const years = Array.from({ length: 50 }, (_, i) => startYear + i);
+
+    const polyester = years.map((_, i) => 200 + i * 20);
+    const cotton = years.map((_, i) => 180 + i * 5);
+    const leather = years.map((_, i) => 150 - i * 2);
+
+    return { years, polyester, cotton, leather };
 }
 
-async function initPolyesterChart() {
+function initPolyesterChart() {
     const ctx = document.getElementById("polyesterChart");
     if (!ctx) return;
 
-    const { labels, values } = await loadPolyesterData();
+    const { years, polyester, cotton, leather } = generateMaterialData();
     const chart = new Chart(ctx, {
         type: "line",
         data: {
-            labels,
-            datasets: [{
-                label: "Polyester Waste (tons)",
-                data: values,
-                borderColor: "#c69cd9",
-                backgroundColor: "rgba(198,156,217,0.2)",
-                borderWidth: 4,
-                tension: 0.4
-            }]
+            labels: years,
+            datasets: [
+                {
+                    label: "Polyester",
+                    data: polyester,
+                    borderColor: "#c69cd9",
+                    backgroundColor: "rgba(198,156,217,0.2)",
+                    borderWidth: 3,
+                    tension: 0.4
+                },
+                {
+                    label: "Cotton",
+                    data: cotton,
+                    borderColor: "#7ac69c",
+                    backgroundColor: "rgba(122,198,156,0.2)",
+                    borderWidth: 3,
+                    tension: 0.4
+                },
+                {
+                    label: "Leather",
+                    data: leather,
+                    borderColor: "#d9a66e",
+                    backgroundColor: "rgba(217,166,110,0.2)",
+                    borderWidth: 3,
+                    tension: 0.4
+                }
+            ]
         },
         options: {
+            responsive: true,
+            plugins: {
+                legend: { position: "top" },
+                title: { display: true, text: "Textile Waste in Landfills (Past 50 Years)" }
+            },
             scales: {
-                y: { beginAtZero: true }
+                x: { title: { display: true, text: "Year" } },
+                y: { beginAtZero: true, title: { display: true, text: "Waste (tons)" } }
             }
         }
     });
 
-    setInterval(async () => {
-        const { labels: newLabels, values: newValues } = await loadPolyesterData();
-        chart.data.labels = newLabels;
-        chart.data.datasets[0].data = newValues;
+    const YEAR_MS = 365 * 24 * 60 * 60 * 1000;
+    setInterval(() => {
+        const { years, polyester, cotton, leather } = generateMaterialData();
+        chart.data.labels = years;
+        chart.data.datasets[0].data = polyester;
+        chart.data.datasets[1].data = cotton;
+        chart.data.datasets[2].data = leather;
         chart.update();
-    }, 60000);
+    }, YEAR_MS);
 }
 
 // MetaMask Wallet Connection
