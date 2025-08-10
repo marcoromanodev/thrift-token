@@ -353,7 +353,12 @@ section > p:not(.graph-source):not(.total-supply)::before {
 
 @media (max-width: 600px) {
     #countdown {
-        font-size: 2rem;
+        font-size: clamp(1rem, 6vw, 1.25rem);
+        gap: 0.25rem;
+    }
+
+    .time-segment {
+        padding: 0 0.25rem;
     }
 }
 
