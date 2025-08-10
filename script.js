@@ -312,7 +312,9 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     const navLinks = document.querySelectorAll('#dropdown-menu a');
-    const sections = Array.from(navLinks).map(link => document.querySelector(link.getAttribute('href')));
+    const sections = Array.from(navLinks)
+        .map(link => document.querySelector(link.getAttribute('href')))
+        .filter(Boolean);
 
     function setActiveLink(link) {
         navLinks.forEach(l => l.classList.remove('active'));
@@ -320,7 +322,24 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     navLinks.forEach(link => {
-        link.addEventListener('click', () => setActiveLink(link));
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const targetId = link.getAttribute('href').substring(1);
+            const targetEl = document.getElementById(targetId);
+            const headerOffset = document.querySelector('header').offsetHeight;
+            const elementPos = targetEl.getBoundingClientRect().top + window.pageYOffset;
+            const offsetPos = elementPos - headerOffset;
+            window.scrollTo({ top: offsetPos, behavior: 'smooth' });
+            setActiveLink(link);
+            document.getElementById('dropdown-menu').style.display = 'none';
+        });
+    });
+
+    const logoLink = document.querySelector('.logo a');
+    logoLink?.addEventListener('click', (e) => {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setActiveLink(navLinks[0]);
     });
 
     function highlightOnScroll() {
