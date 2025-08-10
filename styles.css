@@ -183,6 +183,21 @@ section > p:not(.graph-source):not(.total-supply)::before {
     height: 1em;
 }
 
+.section-icon.red-icon {
+    color: #ff0000;
+    animation: floatCoin 3s ease-in-out infinite, sparkleRed 2s ease-in-out infinite;
+}
+
+.section-icon.gold-icon {
+    color: #FFD700;
+    animation: floatCoin 3s ease-in-out infinite, sparkleGold 2s ease-in-out infinite;
+}
+
+.token-title-icon.gold-icon {
+    color: #FFD700;
+    animation: wiggle 2s ease-in-out infinite, sparkleGold 2s ease-in-out infinite;
+}
+
 @media (min-width: 769px) {
     section {
         max-width: 900px;
@@ -403,6 +418,16 @@ section > p:not(.graph-source):not(.total-supply)::before {
 @keyframes sparkleCoin {
     0%, 100% { filter: drop-shadow(0 0 0px #c69cd9); }
     50% { filter: drop-shadow(0 0 8px #c69cd9); }
+}
+
+@keyframes sparkleRed {
+    0%, 100% { filter: drop-shadow(0 0 0px #ff0000); }
+    50% { filter: drop-shadow(0 0 8px #ff0000); }
+}
+
+@keyframes sparkleGold {
+    0%, 100% { filter: drop-shadow(0 0 0px #FFD700); }
+    50% { filter: drop-shadow(0 0 8px #FFD700); }
 }
 
 .step-icons {
