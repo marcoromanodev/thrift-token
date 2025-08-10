@@ -17,7 +17,23 @@ function updateCountdown() {
     const mins = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     const secs = Math.floor((distance % (1000 * 60)) / 1000);
 
-    countdown.innerHTML = `<span class="count-num">${days}d</span><span class="count-num">${hrs}h</span><span class="count-num">${mins}m</span><span class="count-num">${secs}s</span>`;
+    countdown.innerHTML = `
+        <div class="time-segment">
+            <span class="count-num">${days}</span>
+            <span class="count-label">Days</span>
+        </div>
+        <div class="time-segment">
+            <span class="count-num">${hrs}</span>
+            <span class="count-label">Hours</span>
+        </div>
+        <div class="time-segment">
+            <span class="count-num">${mins}</span>
+            <span class="count-label">Minutes</span>
+        </div>
+        <div class="time-segment">
+            <span class="count-num">${secs}</span>
+            <span class="count-label">Seconds</span>
+        </div>`;
 }
 setInterval(updateCountdown, 1000);
 updateCountdown();
