@@ -10,6 +10,30 @@ body {
     background-color: #ffffff;
     color: #000000;
     text-align: center;
+    padding-top: 100px; /* Space for fixed header */
+}
+
+/* Fixed header so logo, menu arrow, and wallet button stay visible */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #ffffff;
+    z-index: 900;
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 600px) {
+    body {
+        padding-top: 90px;
+    }
+    .logo img {
+        height: 50px;
+    }
 }
 
 section {
@@ -143,8 +167,8 @@ section p::before {
 
 /* Logo */
 .logo img {
-    height: 100px;
-    margin: 20px auto;
+    height: 60px;
+    margin: 0;
     display: block;
     animation: floatCoin 3s ease-in-out infinite, sparkleCoin 2s ease-in-out infinite;
 }
@@ -155,7 +179,7 @@ section p::before {
     border: 1px solid #000;
     color: #ffffff;
     padding: 10px 20px;
-    margin: 1rem auto;
+    margin: 0;
     font-size: 1rem;
     font-weight: bold;
     border-radius: 8px;
@@ -202,14 +226,25 @@ section p::before {
                  1px -1px 0 #000,
                  -1px 1px 0 #000,
                  1px 1px 0 #000;
+    margin-left: auto;
+    margin-right: 1rem;
 }
 .dropdown-menu {
     display: none;
-    margin-top: 1rem;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: #ffffff;
+    margin-top: 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    z-index: 901;
 }
 .dropdown-menu ul {
     list-style: none;
     padding: 0;
+    margin: 0;
 }
 .dropdown-menu ul li {
     display: inline-block;
