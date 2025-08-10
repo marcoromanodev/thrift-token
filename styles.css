@@ -179,6 +179,8 @@ section > p:not(.graph-source):not(.total-supply)::before {
     color: #c69cd9;
     margin-right: 0.5rem;
     animation: floatCoin 3s ease-in-out infinite, sparkleCoin 2s ease-in-out infinite;
+    width: 1em;
+    height: 1em;
 }
 
 @media (min-width: 769px) {
