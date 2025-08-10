@@ -152,25 +152,41 @@ section p::before {
     z-index: 0;
 }
 #countdown {
-    font-size: clamp(2.5rem, 8vw, 6rem);
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: clamp(1.5rem, 4vw, 3rem);
     color: #000;
     z-index: 1;
     position: relative;
-    white-space: nowrap;
+}
+
+.time-segment {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 0 0.5rem;
+    border-left: 1px solid #c69cd9;
+}
+
+.time-segment:first-child {
+    border-left: none;
 }
 
 .count-num {
     font-weight: bold;
-    margin-right: 0.3rem;
 }
 
-.count-num:last-child {
-    margin-right: 0;
+.count-label {
+    font-size: 0.6em;
+    margin-top: 0.2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
 @media (max-width: 600px) {
     #countdown {
-        font-size: 4rem;
+        font-size: 2rem;
     }
 }
 
