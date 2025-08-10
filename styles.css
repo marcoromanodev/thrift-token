@@ -158,6 +158,16 @@ section p::before {
     position: relative;
 }
 
+.count-num {
+    font-weight: bold;
+}
+
+@media (max-width: 600px) {
+    #countdown {
+        font-size: 4rem;
+    }
+}
+
 /* Features & Roadmap */
 .features-grid, .steps {
     display: flex;
