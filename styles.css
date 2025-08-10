@@ -135,23 +135,14 @@ section > p:not(.graph-source):not(.total-supply) {
     height: 100%;
     pointer-events: none;
     overflow: hidden;
-    /* Explicit mask properties for better browser support */
-    -webkit-mask-image: url('textilepile.png');
-    -webkit-mask-repeat: no-repeat;
-    -webkit-mask-size: 100% 100%;
-    -webkit-mask-position: center;
-    mask-image: url('textilepile.png');
-    mask-repeat: no-repeat;
-    mask-size: 100% 100%;
-    mask-position: center;
     z-index: 10; /* place coins above the image */
 }
 
 .coin {
     position: absolute;
     top: -10%;
-    width: 25px;
-    height: 25px;
+    width: 35px;
+    height: 35px;
     background-image: url('coins/thrift.png');
     background-size: contain;
     background-repeat: no-repeat;
