@@ -89,8 +89,8 @@ async function initPolyesterChart() {
                 {
                     label: "Unwanted Clothing Items (annual count, millions)",
                     data: [],
-                    borderColor: "#ff0000",
-                    backgroundColor: "rgba(255,0,0,0.2)",
+                    borderColor: "#c69cd9",
+                    backgroundColor: "rgba(198,156,217,0.2)",
                     borderWidth: 3,
                     tension: 0.4
                 }
@@ -158,7 +158,9 @@ async function initFiberComparisonChart() {
                 {
                     label: "Annual Landfill Waste (million tons)",
                     data: [stats.polyester, stats.cotton, stats.denim, stats.leather],
-                    backgroundColor: ["#ff0000", "#ffcc00", "#66ccff", "#99e26b"],
+                    backgroundColor: ["#c69cd9", "#ffcc00", "#66ccff", "#99e26b"],
+                    borderColor: ["#c69cd9", "#ffcc00", "#66ccff", "#99e26b"],
+                    borderWidth: 1,
                 },
             ],
         },
