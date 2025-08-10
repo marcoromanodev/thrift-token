@@ -5,6 +5,9 @@
     padding: 0;
     box-sizing: border-box;
 }
+html {
+    scroll-behavior: smooth;
+}
 body {
     font-family: 'Arial', sans-serif;
     background-color: #ffffff;
@@ -46,6 +49,7 @@ header {
 
 section {
     padding: 4rem 1rem;
+    scroll-margin-top: 150px;
 }
 
 section p {
@@ -174,6 +178,7 @@ section p::before {
         max-width: 900px;
         margin-left: auto;
         margin-right: auto;
+        scroll-margin-top: 220px;
     }
 }
 
@@ -426,6 +431,8 @@ section p::before {
 .allocation-icon {
     font-size: 1.5rem;
     color: #c69cd9;
+    margin-right: 0.5rem;
+    animation: floatCoin 3s ease-in-out infinite, sparkleCoin 2s ease-in-out infinite;
 }
 .roadmap-container {
     position: relative;
