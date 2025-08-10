@@ -105,6 +105,20 @@ body {
     margin-bottom: 0.5rem;
 }
 
+.step-icon.thrift-coin {
+    animation: floatCoin 3s ease-in-out infinite, sparkleCoin 2s ease-in-out infinite;
+}
+
+@keyframes floatCoin {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+}
+
+@keyframes sparkleCoin {
+    0%, 100% { filter: drop-shadow(0 0 0px #c69cd9); }
+    50% { filter: drop-shadow(0 0 8px #c69cd9); }
+}
+
 .step-icons {
     display: flex;
     justify-content: center;
