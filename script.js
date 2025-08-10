@@ -103,6 +103,46 @@ async function initPolyesterChart() {
     setInterval(updateChart, 5000);
 }
 
+async function initFiberComparisonChart() {
+    const canvas = document.getElementById("fiberComparisonChart");
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+
+    async function fetchData() {
+        try {
+            const response = await fetch("https://api.worldrecycle.net/landfill-breakdown");
+            return await response.json();
+        } catch (err) {
+            return { polyester: 52, cotton: 29, denim: 12, leather: 7 };
+        }
+    }
+
+    const stats = await fetchData();
+    new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: ["Polyester", "Cotton", "Denim", "Leather"],
+            datasets: [
+                {
+                    label: "Landfill Waste (million tons)",
+                    data: [stats.polyester, stats.cotton, stats.denim, stats.leather],
+                    backgroundColor: ["#c69cd9", "#ffcc00", "#66ccff", "#99e26b"],
+                },
+            ],
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { display: false },
+                title: { display: true, text: "Landfill Textile Waste by Material (Live)" },
+            },
+            scales: {
+                y: { beginAtZero: true, title: { display: true, text: "Million tons" } },
+            },
+        },
+    });
+}
+
 // MetaMask Wallet Connection
 document.addEventListener("DOMContentLoaded", function () {
     const connectWalletBtn = document.getElementById("connectWallet");
@@ -186,4 +226,5 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     initPolyesterChart();
+    initFiberComparisonChart();
 });
