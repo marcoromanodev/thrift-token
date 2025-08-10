@@ -49,6 +49,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const connectWalletBtn = document.getElementById("connectWallet");
     const languageBtn = document.getElementById("languageButton");
     const languageContainer = document.querySelector(".language-container");
+    const chatToggle = document.getElementById("chatbotToggle");
+    const chatBox = document.getElementById("chatbot");
+    const chatClose = document.getElementById("chatbotClose");
+    const chatInput = document.getElementById("chatbotInput");
+    const chatSend = document.getElementById("chatbotSend");
+    const chatMessages = document.getElementById("chatbotMessages");
 
     connectWalletBtn.addEventListener("click", async () => {
         if (typeof window.ethereum !== "undefined") {
@@ -68,4 +74,55 @@ document.addEventListener("DOMContentLoaded", function () {
             languageContainer.classList.toggle("open");
         });
     }
+
+    function appendMessage(text, className) {
+        const div = document.createElement("div");
+        div.className = className;
+        div.textContent = text;
+        chatMessages.appendChild(div);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    async function sendChat() {
+        const userMessage = chatInput.value.trim();
+        if (!userMessage) return;
+        appendMessage(userMessage, "chat-user");
+        chatInput.value = "";
+        try {
+            const response = await fetch("https://api.openai.com/v1/chat/completions", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + (window.OPENAI_API_KEY || "YOUR_OPENAI_API_KEY"),
+                },
+                body: JSON.stringify({
+                    model: "gpt-3.5-turbo",
+                    messages: [{ role: "user", content: userMessage }],
+                }),
+            });
+            const data = await response.json();
+            const botMessage = data?.choices?.[0]?.message?.content?.trim() || "Sorry, I couldn't understand.";
+            appendMessage(botMessage, "chat-bot");
+        } catch (err) {
+            console.error("Chat request failed:", err);
+            appendMessage("Error contacting server.", "chat-bot");
+        }
+    }
+
+    chatToggle?.addEventListener("click", () => {
+        chatBox.classList.toggle("hidden");
+        if (!chatBox.classList.contains("hidden")) {
+            chatInput.focus();
+        }
+    });
+
+    chatClose?.addEventListener("click", () => chatBox.classList.add("hidden"));
+
+    chatSend?.addEventListener("click", sendChat);
+
+    chatInput?.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") {
+            sendChat();
+        }
+    });
 });
