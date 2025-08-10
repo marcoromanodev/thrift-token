@@ -491,7 +491,8 @@ section > p:not(.graph-source):not(.total-supply)::before {
 }
 
 .allocation-icon {
-    font-size: 1.5rem;
+    width: 1.5rem;
+    height: 1.5rem;
     color: #c69cd9;
     margin-right: 0.5rem;
     animation: floatCoin 3s ease-in-out infinite, sparkleCoin 2s ease-in-out infinite;
@@ -708,7 +709,6 @@ footer {
 
 .blue-glow-icon {
     color: #1e90ff;
-    text-shadow: 0 0 5px #1e90ff, 0 0 10px #1e90ff;
 }
 
 .ico-progress-wrapper {
