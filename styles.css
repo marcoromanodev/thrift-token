@@ -17,6 +17,7 @@ body {
     height: 100px;
     margin: 20px auto;
     display: block;
+    animation: floatCoin 3s ease-in-out infinite, sparkleCoin 2s ease-in-out infinite;
 }
 
 /* Wallet button */
