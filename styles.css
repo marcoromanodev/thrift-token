@@ -49,7 +49,7 @@ section p {
     display: flex;
     justify-content: space-between;
     max-width: 600px;
-    margin: 0.5rem auto 0;
+    margin: 0.5rem auto 2rem;
     font-size: 0.9rem;
 }
 .tug-labels .token-label {
@@ -57,6 +57,12 @@ section p {
 }
 .tug-labels .waste-label {
     color: #ff0000;
+}
+
+.annual-count {
+    display: block;
+    font-size: 0.8rem;
+    color: #008000;
 }
 
 section p::before {
