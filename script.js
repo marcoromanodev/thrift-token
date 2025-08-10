@@ -204,7 +204,7 @@ async function initICOProgressChart() {
                     labels: ["Raised", "Remaining"],
                     datasets: [{
                         data: [raised, remaining],
-                        backgroundColor: ["#ff66aa", "#ffffff"],
+                        backgroundColor: ["#c69cd9", "#ffffff"],
                         borderColor: "#000",
                         borderWidth: 4,
                     }],
