@@ -42,9 +42,52 @@ section p::before {
     color: #c69cd9;
 }
 
+.vision-board {
+    list-style: none;
+    padding-left: 0;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.vision-board li {
+    background: #fff;
+    border: 2px solid #c69cd9;
+    box-shadow: 4px 4px 0 #000;
+    padding: 1rem;
+    width: 220px;
+    position: relative;
+    transform-origin: top center;
+    animation: swing 4s ease-in-out infinite;
+}
+
+.vision-board li::before {
+    content: '';
+    width: 15px;
+    height: 15px;
+    background: #c69cd9;
+    border: 2px solid #000;
+    border-radius: 50%;
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.vision-board li:nth-child(even) {
+    animation-delay: 2s;
+}
+
+@keyframes swing {
+    0%, 100% { transform: rotate(-2deg); }
+    50% { transform: rotate(2deg); }
+}
+
 .section-icon {
     color: #c69cd9;
     margin-right: 0.5rem;
+    animation: floatCoin 3s ease-in-out infinite, sparkleCoin 2s ease-in-out infinite;
 }
 
 @media (min-width: 769px) {
@@ -210,9 +253,6 @@ section p::before {
     width: 40px;
     height: 40px;
     margin-bottom: 0.5rem;
-}
-
-.step-icon.thrift-coin {
     animation: floatCoin 3s ease-in-out infinite, sparkleCoin 2s ease-in-out infinite;
 }
 
@@ -237,9 +277,6 @@ section p::before {
     font-size: 2rem;
     color: #c69cd9;
     margin-bottom: 0.5rem;
-}
-
-.feature-icon.cartoon {
     animation: floatCoin 3s ease-in-out infinite, sparkleCoin 2s ease-in-out infinite;
 }
 
