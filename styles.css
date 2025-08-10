@@ -127,7 +127,12 @@ section > p:not(.graph-source):not(.total-supply) {
 
 .coin-container {
     position: absolute;
-    inset: 0; /* shorthand for top/right/bottom/left 0 */
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     pointer-events: none;
     overflow: hidden;
     /* Explicit mask properties for better browser support */
