@@ -238,6 +238,18 @@ section p::before {
     color: #c69cd9;
     margin-bottom: 0.5rem;
 }
+
+.feature-icon.cartoon {
+    animation: floatCoin 3s ease-in-out infinite, sparkleCoin 2s ease-in-out infinite;
+}
+
+.supply-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 0.3rem;
+    vertical-align: middle;
+    animation: floatCoin 3s ease-in-out infinite, sparkleCoin 2s ease-in-out infinite;
+}
 .roadmap-container {
     display: flex;
     flex-direction: column;
