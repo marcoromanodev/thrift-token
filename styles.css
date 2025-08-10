@@ -71,7 +71,7 @@ section p {
 }
 .tug-bar.token {
     left: 0;
-    background-color: #800080;
+    background-color: #c69cd9;
 }
 .tug-bar.waste {
     right: 0;
@@ -85,10 +85,10 @@ section p {
     font-size: 0.9rem;
 }
 .tug-labels .token-label {
-    color: #800080;
+    color: #c69cd9;
 }
 .tug-labels .waste-label {
-    color: #ff0000;
+    color: #c69cd9;
 }
 
 .annual-count {
