@@ -706,6 +706,11 @@ footer {
     color: #28a745;
 }
 
+.blue-glow-icon {
+    color: #1e90ff;
+    text-shadow: 0 0 5px #1e90ff, 0 0 10px #1e90ff;
+}
+
 .ico-progress-wrapper {
     background: #e6f7ff;
     border: 4px solid #c69cd9;
