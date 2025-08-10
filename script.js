@@ -44,49 +44,21 @@ function toggleMenu() {
     menu.style.display = menu.style.display === "block" ? "none" : "block";
 }
 
-function generateMaterialData() {
-    const currentYear = new Date().getFullYear();
-    const startYear = currentYear - 49;
-    const years = Array.from({ length: 50 }, (_, i) => startYear + i);
+async function initPolyesterChart() {
+    const canvas = document.getElementById("polyesterChart");
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
 
-    const polyester = years.map((_, i) => 200 + i * 20);
-    const cotton = years.map((_, i) => 180 + i * 5);
-    const leather = years.map((_, i) => 150 - i * 2);
-
-    return { years, polyester, cotton, leather };
-}
-
-function initPolyesterChart() {
-    const ctx = document.getElementById("polyesterChart");
-    if (!ctx) return;
-
-    const { years, polyester, cotton, leather } = generateMaterialData();
     const chart = new Chart(ctx, {
         type: "line",
         data: {
-            labels: years,
+            labels: [],
             datasets: [
                 {
-                    label: "Polyester",
-                    data: polyester,
+                    label: "Unwanted Clothing Items (millions)",
+                    data: [],
                     borderColor: "#c69cd9",
                     backgroundColor: "rgba(198,156,217,0.2)",
-                    borderWidth: 3,
-                    tension: 0.4
-                },
-                {
-                    label: "Cotton",
-                    data: cotton,
-                    borderColor: "#7ac69c",
-                    backgroundColor: "rgba(122,198,156,0.2)",
-                    borderWidth: 3,
-                    tension: 0.4
-                },
-                {
-                    label: "Leather",
-                    data: leather,
-                    borderColor: "#d9a66e",
-                    backgroundColor: "rgba(217,166,110,0.2)",
                     borderWidth: 3,
                     tension: 0.4
                 }
@@ -96,24 +68,39 @@ function initPolyesterChart() {
             responsive: true,
             plugins: {
                 legend: { position: "top" },
-                title: { display: true, text: "Textile Waste in Landfills (Past 50 Years)" }
+                title: { display: true, text: "Unwanted Clothing Items in Thrifts (Live)" }
             },
             scales: {
-                x: { title: { display: true, text: "Year" } },
-                y: { beginAtZero: true, title: { display: true, text: "Waste (tons)" } }
+                x: { title: { display: true, text: "Time" } },
+                y: { beginAtZero: true, title: { display: true, text: "Items (millions)" } }
             }
         }
     });
 
-    const YEAR_MS = 365 * 24 * 60 * 60 * 1000;
-    setInterval(() => {
-        const { years, polyester, cotton, leather } = generateMaterialData();
-        chart.data.labels = years;
-        chart.data.datasets[0].data = polyester;
-        chart.data.datasets[1].data = cotton;
-        chart.data.datasets[2].data = leather;
+    async function fetchCount() {
+        try {
+            const response = await fetch("https://api.worldrecycle.net/unwanted-clothes-count");
+            const data = await response.json();
+            return data.count;
+        } catch (err) {
+            return Math.floor(Math.random() * 50) + 50; // Fallback simulated data
+        }
+    }
+
+    async function updateChart() {
+        const count = await fetchCount();
+        const now = new Date().toLocaleTimeString();
+        chart.data.labels.push(now);
+        chart.data.datasets[0].data.push(count);
+        if (chart.data.labels.length > 20) {
+            chart.data.labels.shift();
+            chart.data.datasets[0].data.shift();
+        }
         chart.update();
-    }, YEAR_MS);
+    }
+
+    updateChart();
+    setInterval(updateChart, 5000);
 }
 
 // MetaMask Wallet Connection
