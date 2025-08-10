@@ -22,6 +22,43 @@ section p {
     line-height: 1.6;
 }
 
+/* Tug of War Graphic */
+.tug-of-war {
+    position: relative;
+    width: 100%;
+    height: 20px;
+    border: 2px solid #000;
+    margin: 1rem auto;
+    overflow: hidden;
+}
+.tug-bar {
+    position: absolute;
+    top: 0;
+    height: 100%;
+    transition: width 0.3s linear;
+}
+.tug-bar.token {
+    left: 0;
+    background-color: #800080;
+}
+.tug-bar.waste {
+    right: 0;
+    background-color: #ff0000;
+}
+.tug-labels {
+    display: flex;
+    justify-content: space-between;
+    max-width: 600px;
+    margin: 0.5rem auto 0;
+    font-size: 0.9rem;
+}
+.tug-labels .token-label {
+    color: #800080;
+}
+.tug-labels .waste-label {
+    color: #ff0000;
+}
+
 section p::before {
     font-family: "Font Awesome 6 Free";
     font-weight: 900;

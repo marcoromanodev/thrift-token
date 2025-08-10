@@ -44,6 +44,38 @@ function toggleMenu() {
     menu.style.display = menu.style.display === "block" ? "none" : "block";
 }
 
+function initTugOfWar() {
+    const tokenBar = document.getElementById("tokenBar");
+    const wasteBar = document.getElementById("wasteBar");
+    const tokenCount = document.getElementById("tokenCount");
+    const wasteCount = document.getElementById("wasteCount");
+    if (!tokenBar || !wasteBar) return;
+
+    const maxTokens = 92_000_000;
+    const maxWaste = 92_000_000_000; // kg (92 million tons)
+    let tokens = 0;
+    let waste = maxWaste;
+
+    function step() {
+        tokens += maxTokens / 200;
+        waste -= maxWaste / 200;
+        if (tokens >= maxTokens && waste <= 0) {
+            tokens = 0;
+            waste = maxWaste;
+        }
+
+        const progress = ((tokens / maxTokens) + (1 - waste / maxWaste)) / 2;
+        tokenBar.style.width = progress * 100 + "%";
+        wasteBar.style.width = (1 - progress) * 100 + "%";
+
+        tokenCount.textContent = Math.round(tokens).toLocaleString() + " Thrift Tokens";
+        wasteCount.textContent = Math.round(waste).toLocaleString() + " kg Waste";
+    }
+
+    step();
+    setInterval(step, 100);
+}
+
 async function initPolyesterChart() {
     const canvas = document.getElementById("polyesterChart");
     if (!canvas) return;
@@ -227,4 +259,5 @@ document.addEventListener("DOMContentLoaded", function () {
 
     initFiberComparisonChart();
     initPolyesterChart();
+    initTugOfWar();
 });
