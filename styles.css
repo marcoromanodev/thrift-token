@@ -45,11 +45,21 @@ header {
         justify-content: center;
         align-items: center;
     }
-    .dropdown-arrow {
-        margin-top: 0.5rem;
+    .logo {
+        order: 1;
     }
     #connectWallet {
+        order: 2;
         margin-top: 0.5rem;
+    }
+    .dropdown-arrow {
+        order: 3;
+        margin-top: 0.5rem;
+        margin-left: 0;
+        margin-right: 0;
+    }
+    .dropdown-menu {
+        order: 4;
     }
 }
 
@@ -209,12 +219,15 @@ section p::before {
 
 /* Language selector and chat toggle */
 .language-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-end;
     gap: 0.5rem;
-    margin: 1rem auto;
-    position: relative;
+    margin: 0;
+    z-index: 1001;
 }
 .language-container button {
     background-color: #c69cd9;
@@ -229,9 +242,9 @@ section p::before {
 .language-dropdown {
     display: none;
     position: absolute;
-    top: 100%;
-    left: 0;
-    margin-top: 0.5rem;
+    bottom: 100%;
+    right: 0;
+    margin-bottom: 0.5rem;
 }
 .language-container.open .language-dropdown {
     display: block;
