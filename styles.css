@@ -80,6 +80,32 @@ section p::before {
     background-color: #b17cc7;
 }
 
+/* Language selector */
+.language-container {
+    position: fixed;
+    top: 10px;
+    left: 10px;
+    z-index: 1000;
+    text-align: left;
+}
+.language-container button {
+    background-color: #c69cd9;
+    border: 1px solid #000;
+    color: #ffffff;
+    padding: 5px 10px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.language-dropdown {
+    display: none;
+    margin-top: 0.5rem;
+}
+.language-container.open .language-dropdown {
+    display: block;
+}
+
 /* Dropdown menu */
 .dropdown-arrow {
     font-size: 2rem;
@@ -126,7 +152,7 @@ section p::before {
     z-index: 0;
 }
 #countdown {
-    font-size: 2rem;
+    font-size: clamp(2.5rem, 8vw, 6rem);
     color: #000;
     z-index: 1;
     position: relative;
@@ -232,6 +258,13 @@ footer {
 }
 .footer-links a:hover {
     color: #c69cd9;
+}
+
+/* Tokenomics */
+#tokenomics .section-list {
+    text-align: center;
+    list-style-position: inside;
+    padding-left: 0;
 }
 
 /* Whitepaper button */

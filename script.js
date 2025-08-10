@@ -31,6 +31,8 @@ function toggleMenu() {
 // MetaMask Wallet Connection
 document.addEventListener("DOMContentLoaded", function () {
     const connectWalletBtn = document.getElementById("connectWallet");
+    const languageBtn = document.getElementById("languageButton");
+    const languageContainer = document.querySelector(".language-container");
 
     connectWalletBtn.addEventListener("click", async () => {
         if (typeof window.ethereum !== "undefined") {
@@ -44,4 +46,10 @@ document.addEventListener("DOMContentLoaded", function () {
             alert("Please install MetaMask to use this feature.");
         }
     });
+
+    if (languageBtn && languageContainer) {
+        languageBtn.addEventListener("click", () => {
+            languageContainer.classList.toggle("open");
+        });
+    }
 });
