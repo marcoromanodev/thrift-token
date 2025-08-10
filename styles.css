@@ -416,8 +416,8 @@ section > p:not(.graph-source):not(.total-supply)::before {
 }
 
 @keyframes sparkleCoin {
-    0%, 100% { filter: drop-shadow(0 0 0px #c69cd9); }
-    50% { filter: drop-shadow(0 0 8px #c69cd9); }
+    0%, 100% { filter: drop-shadow(0 0 0px currentColor); }
+    50% { filter: drop-shadow(0 0 8px currentColor); }
 }
 
 @keyframes sparkleRed {
@@ -687,6 +687,14 @@ footer {
 
 .utility-item:nth-child(2) .utility-icon { animation-delay: 0.3s; }
 .utility-item:nth-child(3) .utility-icon { animation-delay: 0.6s; }
+
+.pink-icon {
+    color: #ff66aa;
+}
+
+.sparkle-icon {
+    animation: bounce 2s ease-in-out infinite, sparkleCoin 2s ease-in-out infinite;
+}
 
 .green-icon {
     color: #28a745;
