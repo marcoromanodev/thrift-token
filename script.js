@@ -267,12 +267,13 @@ function initCoinRain() {
             coin.addEventListener('animationend', () => coin.remove());
         }
 
-        // spawn multiple coins each interval so the entire image mountain is covered
+        // Spawn multiple coins each interval so the entire image mountain is covered
+        // Slowed down to reduce overall spawn rate
         setInterval(() => {
             for (let i = 0; i < 5; i++) {
                 spawnCoin();
             }
-        }, 100);
+        }, 250);
     };
 }
 
