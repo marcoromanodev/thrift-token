@@ -136,13 +136,10 @@ section > p:not(.graph-source):not(.total-supply) {
     pointer-events: none;
     overflow: hidden;
     z-index: 10; /* place coins above the image */
-    clip-path: polygon(50% 0, 0 100%, 100% 100%);
-    -webkit-clip-path: polygon(50% 0, 0 100%, 100% 100%);
 }
 
 .coin {
     position: absolute;
-    top: -10%;
     width: 35px;
     height: 35px;
     background-image: url('coins/thrift.png');
@@ -153,8 +150,8 @@ section > p:not(.graph-source):not(.total-supply) {
 }
 
 @keyframes coinFall {
-    0% { transform: translateY(0); }
-    100% { transform: translateY(120%); }
+    0% { top: -10%; }
+    100% { top: 110%; }
 }
 
 section > p:not(.graph-source):not(.total-supply)::before {
