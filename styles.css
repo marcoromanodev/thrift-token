@@ -136,6 +136,8 @@ section > p:not(.graph-source):not(.total-supply) {
     pointer-events: none;
     overflow: hidden;
     z-index: 10; /* place coins above the image */
+    clip-path: polygon(50% 0, 0 100%, 100% 100%);
+    -webkit-clip-path: polygon(50% 0, 0 100%, 100% 100%);
 }
 
 .coin {
