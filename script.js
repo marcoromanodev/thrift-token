@@ -232,17 +232,43 @@ async function initICOProgressChart() {
 function initCoinRain() {
     const container = document.querySelector('.coin-container');
     if (!container) return;
+    const maskImg = new Image();
+    maskImg.src = 'textilepile.png';
+    maskImg.onload = () => {
+        const canvas = document.createElement('canvas');
+        canvas.width = maskImg.width;
+        canvas.height = maskImg.height;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(maskImg, 0, 0);
+        const data = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
 
-    function spawnCoin() {
-        const coin = document.createElement('div');
-        coin.className = 'coin';
-        coin.style.left = Math.random() * 100 + '%';
-        container.appendChild(coin);
-        coin.addEventListener('animationend', () => coin.remove());
-    }
+        function getTopOpaqueY(x) {
+            x = Math.floor(x);
+            for (let y = 0; y < canvas.height; y++) {
+                if (data[(y * canvas.width + x) * 4 + 3] > 0) return y;
+            }
+            return -1;
+        }
 
-    // Drop more coins for a denser effect
-    setInterval(spawnCoin, 100);
+        function spawnCoin() {
+            let x, y;
+            do {
+                x = Math.random() * canvas.width;
+                y = getTopOpaqueY(x);
+            } while (y === -1);
+
+            const scaleX = container.clientWidth / canvas.width;
+            const scaleY = container.clientHeight / canvas.height;
+            const coin = document.createElement('div');
+            coin.className = 'coin';
+            coin.style.left = x * scaleX + 'px';
+            coin.style.setProperty('--start-top', y * scaleY - 35 + 'px');
+            container.appendChild(coin);
+            coin.addEventListener('animationend', () => coin.remove());
+        }
+
+        setInterval(spawnCoin, 100);
+    };
 }
 
 // MetaMask Wallet Connection
