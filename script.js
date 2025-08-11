@@ -241,8 +241,8 @@ function initCoinRain() {
         coin.addEventListener('animationend', () => coin.remove());
     }
 
-    // Drop fewer coins so the effect is visible without overwhelming the page
-    setInterval(spawnCoin, 300);
+    // Drop more coins for a denser effect
+    setInterval(spawnCoin, 100);
 }
 
 // MetaMask Wallet Connection
