@@ -229,52 +229,111 @@ async function initICOProgressChart() {
     setInterval(updateChart, 5000);
 }
 
-function initCoinRain() {
-    const container = document.querySelector('.coin-container');
-    if (!container) return;
-    const maskImg = new Image();
-    maskImg.src = 'textilepile.png';
-    maskImg.onload = () => {
-        const canvas = document.createElement('canvas');
-        canvas.width = maskImg.width;
-        canvas.height = maskImg.height;
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(maskImg, 0, 0);
-        const data = ctx.getImageData(0, 0, canvas.width, canvas.height).data;
+function initRecycleAnimation() {
+    const canvas = document.getElementById('recycleAnimation');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width;
+    const H = canvas.height;
+    const ground = H - 20;
+    const hub = { x: W - 60, y: ground - 40 };
 
-        function getTopOpaqueY(x) {
-            x = Math.floor(x);
-            for (let y = 0; y < canvas.height; y++) {
-                if (data[(y * canvas.width + x) * 4 + 3] > 0) return y;
+    const clothes = Array.from({ length: 5 }, () => ({
+        x: Math.random() * (W * 0.4) + 20,
+        y: ground - 10,
+        picked: false
+    }));
+    const drones = [];
+    const tokens = [];
+
+    function spawnDrone() {
+        const target = clothes.find(c => !c.picked);
+        if (!target) return;
+        drones.push({ x: -30, y: 40, state: 'toClothes', target });
+    }
+    spawnDrone();
+    setInterval(spawnDrone, 4000);
+
+    function loop() {
+        ctx.clearRect(0, 0, W, H);
+        ctx.fillStyle = '#e0e0e0';
+        ctx.fillRect(0, ground, W, H - ground);
+        ctx.fillStyle = '#8ecae6';
+        ctx.fillRect(hub.x - 20, hub.y - 20, 40, 40);
+        ctx.fillStyle = '#ffb703';
+        ctx.beginPath();
+        ctx.arc(hub.x, hub.y + 25, 8, 0, Math.PI * 2);
+        ctx.fill();
+
+        clothes.forEach(c => {
+            if (!c.picked) {
+                ctx.fillStyle = '#6d6875';
+                ctx.fillRect(c.x, c.y - 15, 15, 15);
             }
-            return -1;
+        });
+
+        drones.forEach((d, i) => {
+            if (d.state === 'toClothes') {
+                const dx = d.target.x - d.x;
+                const dy = (d.target.y - 20) - d.y;
+                const dist = Math.hypot(dx, dy);
+                if (dist < 2) {
+                    d.state = 'toHub';
+                    d.target.picked = true;
+                } else {
+                    d.x += (dx / dist) * 2;
+                    d.y += (dy / dist) * 2;
+                }
+            } else if (d.state === 'toHub') {
+                const dx = hub.x - d.x;
+                const dy = hub.y - d.y;
+                const dist = Math.hypot(dx, dy);
+                if (dist < 2) {
+                    for (let j = 0; j < 5; j++) {
+                        tokens.push({ x: hub.x, y: hub.y, vx: Math.random() * 2 - 1, vy: -Math.random() * 2 - 1, life: 60 });
+                    }
+                    drones.splice(i, 1);
+                } else {
+                    d.x += (dx / dist) * 2;
+                    d.y += (dy / dist) * 2;
+                    d.target.x = d.x;
+                    d.target.y = d.y + 20;
+                }
+            }
+
+            ctx.fillStyle = '#adb5bd';
+            ctx.fillRect(d.x - 10, d.y - 5, 20, 10);
+            ctx.strokeStyle = '#adb5bd';
+            ctx.beginPath();
+            ctx.moveTo(d.x - 12, d.y - 7);
+            ctx.lineTo(d.x - 20, d.y - 7);
+            ctx.moveTo(d.x + 12, d.y - 7);
+            ctx.lineTo(d.x + 20, d.y - 7);
+            ctx.stroke();
+
+            if (d.target && d.target.picked && d.state === 'toHub') {
+                ctx.fillStyle = '#6d6875';
+                ctx.fillRect(d.target.x - 7, d.target.y, 15, 15);
+            }
+        });
+
+        tokens.forEach((t, idx) => {
+            t.x += t.vx;
+            t.y += t.vy;
+            t.vy += 0.05;
+            t.life--;
+            ctx.fillStyle = '#ffcc00';
+            ctx.beginPath();
+            ctx.arc(t.x, t.y, 5, 0, Math.PI * 2);
+            ctx.fill();
+        });
+        for (let i = tokens.length - 1; i >= 0; i--) {
+            if (tokens[i].life <= 0) tokens.splice(i, 1);
         }
 
-        function spawnCoin() {
-            let x, y;
-            do {
-                x = Math.random() * canvas.width;
-                y = getTopOpaqueY(x);
-            } while (y === -1);
-
-            const scaleX = container.clientWidth / canvas.width;
-            const scaleY = container.clientHeight / canvas.height;
-            const coin = document.createElement('div');
-            coin.className = 'coin';
-            coin.style.left = x * scaleX + 'px';
-            coin.style.setProperty('--start-top', y * scaleY - 35 + 'px');
-            container.appendChild(coin);
-            coin.addEventListener('animationend', () => coin.remove());
-        }
-
-        // Spawn multiple coins each interval so the entire image mountain is covered
-        // Slowed down to reduce overall spawn rate
-        setInterval(() => {
-            for (let i = 0; i < 5; i++) {
-                spawnCoin();
-            }
-        }, 250);
-    };
+        requestAnimationFrame(loop);
+    }
+    loop();
 }
 
 // MetaMask Wallet Connection
@@ -419,7 +478,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     roadmapPhases.forEach((phase) => phaseObserver.observe(phase));
 
-    initCoinRain();
+    initRecycleAnimation();
 
     try {
         initFiberComparisonChart();
