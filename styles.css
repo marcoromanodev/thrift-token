@@ -115,52 +115,13 @@ section > p:not(.graph-source):not(.total-supply) {
 
 .mission-image {
     position: relative;
-    max-width: 300px;
+    max-width: 400px;
     margin: 1rem auto;
 }
 
-/* Ensure the pile of clothes image forms the base layer */
-.mission-image img {
+.mission-image canvas {
     width: 100%;
     display: block;
-}
-
-.coin-container {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    pointer-events: none;
-    overflow: hidden;
-    z-index: 10; /* place coins above the image */
-    -webkit-mask-image: url('textilepile.png');
-    mask-image: url('textilepile.png');
-    -webkit-mask-size: cover;
-    mask-size: cover;
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
-    -webkit-mask-position: center;
-    mask-position: center;
-}
-
-.coin {
-    position: absolute;
-    width: 35px;
-    height: 35px;
-    background-image: url('coins/thrift.png');
-    background-size: contain;
-    background-repeat: no-repeat;
-    top: var(--start-top, -10%);
-    animation: coinFall 3s linear forwards;
-    z-index: 11;
-}
-
-@keyframes coinFall {
-    0% { top: var(--start-top, -10%); }
-    100% { top: 110%; }
 }
 
 section > p:not(.graph-source):not(.total-supply)::before {
