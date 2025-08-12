@@ -39,13 +39,15 @@
             </ul>
         </div>
     </header>
-    <div class="language-container">
-        <button id="languageButton">Language</button>
-        <div id="google_translate_element" class="language-dropdown"></div>
-    </div>
     <button id="chatbotToggle" class="chatbot-toggle" aria-label="Open chat">
         <i class="fa-solid fa-comments"></i>
     </button>
+    <div class="language-container">
+        <button id="languageButton" aria-label="Change language">
+            <img src="translate.png" alt="Translate" />
+        </button>
+        <div id="google_translate_element" class="language-dropdown"></div>
+    </div>
     <div id="chatbot" class="chatbot hidden">
         <div class="chatbot-header">AI Assistant <span id="chatbotClose" class="chatbot-close">&times;</span></div>
         <div id="chatbotMessages" class="chatbot-messages"></div>
