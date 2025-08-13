@@ -162,6 +162,9 @@ section > p:not(.graph-source):not(.total-supply)::before {
     position: relative;
     transform-origin: top center;
     animation: swing 4s ease-in-out infinite;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .vision-board li::before {
@@ -184,6 +187,10 @@ section > p:not(.graph-source):not(.total-supply)::before {
 @keyframes swing {
     0%, 100% { transform: rotate(-2deg); }
     50% { transform: rotate(2deg); }
+}
+
+.vision-icon {
+    animation: bounce 2s ease-in-out infinite;
 }
 
 .section-icon {
