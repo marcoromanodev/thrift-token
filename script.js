@@ -276,6 +276,7 @@ function initRecycleAnimation() {
 
     const textileImg = new Image();
     textileImg.src = 'textilepile.png';
+    let textileScale = 1;
 
     function drawClothing(ctx, x, y, type = 'shirt', color = '#6d6875') {
         ctx.fillStyle = color;
@@ -359,7 +360,9 @@ function initRecycleAnimation() {
     }
 
     function spawnDroneToPerson() {
-        const candidates = people.filter(p => !p.picked);
+        const candidates = people.filter(
+            p => !p.picked && !drones.some(d => d.state === 'toPerson' && d.target === p)
+        );
         if (candidates.length) {
             candidates.sort((a, b) => a.x - b.x); // serve people from left to right
             const target = candidates[0];
@@ -368,10 +371,10 @@ function initRecycleAnimation() {
     }
 
     function maintainDrones() {
-        if (!drones.some(d => d.state === 'toClothes')) {
+        if (drones.filter(d => d.state === 'toClothes').length < 1) {
             spawnDroneToClothes();
         }
-        if (!drones.some(d => d.state === 'toPerson')) {
+        while (drones.filter(d => d.state === 'toPerson').length < 2) {
             spawnDroneToPerson();
         }
     }
@@ -431,10 +434,12 @@ function initRecycleAnimation() {
         // textile pile background on left side
         if (textileImg.complete) {
             ctx.filter = 'contrast(1.2) saturate(1.4)';
-            const texW = 110;
-            const texH = 75;
+            const texW = 110 * textileScale;
+            const texH = 75 * textileScale;
             ctx.drawImage(textileImg, 10, ground - texH, texW, texH);
             ctx.filter = 'none';
+            textileScale -= 0.001;
+            if (textileScale <= 0) textileScale = 1;
         }
 
         clothes.forEach(c => {
