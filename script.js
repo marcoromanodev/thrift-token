@@ -246,6 +246,27 @@ function initRecycleAnimation() {
     const drones = [];
     const tokens = [];
 
+    const tokenImg = new Image();
+    tokenImg.src = 'coins/thrift.png';
+
+    function drawClothing(ctx, x, y) {
+        ctx.fillStyle = '#6d6875';
+        ctx.beginPath();
+        ctx.moveTo(x + 3, y); // left shoulder
+        ctx.lineTo(x + 6, y); // neck left
+        ctx.lineTo(x + 7.5, y + 3); // neck bottom
+        ctx.lineTo(x + 9, y); // neck right
+        ctx.lineTo(x + 12, y); // right shoulder
+        ctx.lineTo(x + 15, y + 5); // right sleeve end
+        ctx.lineTo(x + 12, y + 5); // right sleeve inner
+        ctx.lineTo(x + 12, y + 15); // right bottom
+        ctx.lineTo(x + 3, y + 15); // left bottom
+        ctx.lineTo(x + 3, y + 5); // left sleeve inner
+        ctx.lineTo(x, y + 5); // left sleeve end
+        ctx.closePath();
+        ctx.fill();
+    }
+
     function spawnDrone() {
         const target = clothes.find(c => !c.picked);
         if (!target) return;
@@ -256,8 +277,6 @@ function initRecycleAnimation() {
 
     function loop() {
         ctx.clearRect(0, 0, W, H);
-        ctx.fillStyle = '#e0e0e0';
-        ctx.fillRect(0, ground, W, H - ground);
         ctx.fillStyle = '#8ecae6';
         ctx.fillRect(hub.x - 20, hub.y - 20, 40, 40);
         ctx.fillStyle = '#ffb703';
@@ -267,8 +286,7 @@ function initRecycleAnimation() {
 
         clothes.forEach(c => {
             if (!c.picked) {
-                ctx.fillStyle = '#6d6875';
-                ctx.fillRect(c.x, c.y - 15, 15, 15);
+                drawClothing(ctx, c.x, c.y - 15);
             }
         });
 
@@ -312,8 +330,7 @@ function initRecycleAnimation() {
             ctx.stroke();
 
             if (d.target && d.target.picked && d.state === 'toHub') {
-                ctx.fillStyle = '#6d6875';
-                ctx.fillRect(d.target.x - 7, d.target.y, 15, 15);
+                drawClothing(ctx, d.target.x - 7, d.target.y);
             }
         });
 
@@ -322,10 +339,14 @@ function initRecycleAnimation() {
             t.y += t.vy;
             t.vy += 0.05;
             t.life--;
-            ctx.fillStyle = '#ffcc00';
-            ctx.beginPath();
-            ctx.arc(t.x, t.y, 5, 0, Math.PI * 2);
-            ctx.fill();
+            if (tokenImg.complete) {
+                ctx.drawImage(tokenImg, t.x - 5, t.y - 5, 10, 10);
+            } else {
+                ctx.fillStyle = '#800080';
+                ctx.beginPath();
+                ctx.arc(t.x, t.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+            }
         });
         for (let i = tokens.length - 1; i >= 0; i--) {
             if (tokens[i].life <= 0) tokens.splice(i, 1);
