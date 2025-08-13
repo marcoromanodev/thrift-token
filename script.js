@@ -237,6 +237,10 @@ function initRecycleAnimation() {
     const H = canvas.height;
     const ground = H - 20;
     const hub = { x: W - 60, y: ground - 40 };
+    const hubRadius = 25;
+    const baseHeight = 20;
+    const tokenW = 40;
+    const tokenH = 20;
 
     const clothingTypes = ['shirt', 'pants', 'shorts', 'bag'];
     const clothingColors = ['#e63946', '#ffb703', '#2a9d8f', '#457b9d', '#e07a5f'];
@@ -309,22 +313,32 @@ function initRecycleAnimation() {
         ctx.clearRect(0, 0, W, H);
 
         // draw futuristic dome hub
+        ctx.save();
+        ctx.shadowColor = '#00ffff';
+        ctx.shadowBlur = 12;
         ctx.fillStyle = '#8ecae6';
         ctx.beginPath();
-        ctx.arc(hub.x, hub.y, 20, Math.PI, 0);
+        ctx.arc(hub.x, hub.y, hubRadius, Math.PI, 0);
         ctx.fill();
-        ctx.fillRect(hub.x - 20, hub.y, 40, 15);
+        ctx.fillRect(hub.x - hubRadius, hub.y, hubRadius * 2, baseHeight);
+        ctx.restore();
+        ctx.strokeStyle = '#023047';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(hub.x, hub.y, hubRadius, Math.PI, 0);
+        ctx.stroke();
+        ctx.strokeRect(hub.x - hubRadius, hub.y, hubRadius * 2, baseHeight);
         ctx.fillStyle = '#ffb703';
-        ctx.fillRect(hub.x - 5, hub.y + 5, 10, 10);
+        ctx.fillRect(hub.x - 5, hub.y + baseHeight / 2, 10, baseHeight / 2);
         if (hubImg.complete) {
-            ctx.drawImage(hubImg, hub.x - 15, hub.y - 7.5, 30, 15);
+            ctx.drawImage(hubImg, hub.x - tokenW / 2, hub.y - hubRadius / 2 - tokenH / 2, tokenW, tokenH);
         }
 
         // textile pile background on left side
         if (textileImg.complete) {
             ctx.filter = 'contrast(1.2) saturate(1.4)';
-            const texW = 90;
-            const texH = 60;
+            const texW = 110;
+            const texH = 75;
             ctx.drawImage(textileImg, 10, ground - texH, texW, texH);
             ctx.filter = 'none';
         }
