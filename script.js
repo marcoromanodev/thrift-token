@@ -250,8 +250,8 @@ function initRecycleAnimation() {
         type: clothingTypes[Math.floor(Math.random() * clothingTypes.length)],
         color: clothingColors[Math.floor(Math.random() * clothingColors.length)]
     }));
-    const people = Array.from({ length: 2 }, (_, i) => ({
-        x: W * 0.5 + i * 40,
+    const people = Array.from({ length: 4 }, (_, i) => ({
+        x: W * 0.35 + i * 40,
         y: ground - 10,
         picked: false,
         type: clothingTypes[Math.floor(Math.random() * clothingTypes.length)],
@@ -328,13 +328,31 @@ function initRecycleAnimation() {
         }
     }
 
-    function spawnDrone() {
+    function spawnDroneToClothes() {
         const target = clothes.find(c => !c.picked);
-        if (!target) return;
-        drones.push({ x: -30, y: 40, state: 'toClothes', target, carry: [] });
+        if (target) {
+            drones.push({ x: -30, y: 40, state: 'toClothes', target, carry: [] });
+        }
     }
-    spawnDrone();
-    setInterval(spawnDrone, 4000);
+
+    function spawnDroneToPerson() {
+        const target = people.find(p => !p.picked);
+        if (target) {
+            drones.push({ x: -30, y: 40, state: 'toPerson', target, carry: [] });
+        }
+    }
+
+    function maintainDrones() {
+        if (!drones.some(d => d.state === 'toClothes')) {
+            spawnDroneToClothes();
+        }
+        if (!drones.some(d => d.state === 'toPerson')) {
+            spawnDroneToPerson();
+        }
+    }
+
+    maintainDrones();
+    setInterval(maintainDrones, 2000);
 
     function loop() {
         ctx.clearRect(0, 0, W, H);
@@ -413,8 +431,8 @@ function initRecycleAnimation() {
                         d.state = 'toHub';
                     }
                 } else {
-                    d.x += (dx / dist) * 2;
-                    d.y += (dy / dist) * 2;
+                    d.x += (dx / dist) * 3;
+                    d.y += (dy / dist) * 3;
                 }
             } else if (d.state === 'toPerson') {
                 const dx = d.target.x - d.x;
@@ -429,8 +447,8 @@ function initRecycleAnimation() {
                         d.state = 'toHub';
                     }
                 } else {
-                    d.x += (dx / dist) * 2;
-                    d.y += (dy / dist) * 2;
+                    d.x += (dx / dist) * 3;
+                    d.y += (dy / dist) * 3;
                 }
             } else if (d.state === 'toHub') {
                 const dx = hub.x - d.x;
@@ -452,7 +470,7 @@ function initRecycleAnimation() {
                     people.forEach(p => {
                         if (p.picked) {
                             p.picked = false;
-                            p.x = Math.random() * (W * 0.4) + W * 0.5;
+                            p.x = Math.random() * (W * 0.3) + W * 0.35;
                             p.y = ground - 10;
                             p.type = clothingTypes[Math.floor(Math.random() * clothingTypes.length)];
                             p.color = clothingColors[Math.floor(Math.random() * clothingColors.length)];
@@ -460,8 +478,8 @@ function initRecycleAnimation() {
                     });
                     drones.splice(i, 1);
                 } else {
-                    d.x += (dx / dist) * 2;
-                    d.y += (dy / dist) * 2;
+                    d.x += (dx / dist) * 3;
+                    d.y += (dy / dist) * 3;
                 }
             }
 
