@@ -243,13 +243,21 @@ function initRecycleAnimation() {
     const clothingTypes = ['shirt', 'pants', 'shorts', 'bag'];
     const clothingColors = ['#e63946', '#ffb703', '#2a9d8f', '#457b9d', '#e07a5f'];
 
-    const clothes = Array.from({ length: 5 }, () => ({
-        x: Math.random() * (W * 0.4) + 20,
-        y: ground - 10,
-        picked: false,
-        type: clothingTypes[Math.floor(Math.random() * clothingTypes.length)],
-        color: clothingColors[Math.floor(Math.random() * clothingColors.length)]
-    }));
+    function spawnClothing() {
+        let x;
+        do {
+            x = Math.random() * (W * 0.4) + 20;
+        } while (x > hub.x - hubRadius - 40); // keep clothes away from the hub
+        return {
+            x,
+            y: ground - 10,
+            picked: false,
+            type: clothingTypes[Math.floor(Math.random() * clothingTypes.length)],
+            color: clothingColors[Math.floor(Math.random() * clothingColors.length)]
+        };
+    }
+
+    const clothes = Array.from({ length: 5 }, spawnClothing);
     const people = Array.from({ length: 4 }, (_, i) => ({
         x: W * 0.35 + i * 40,
         y: ground - 10,
@@ -271,18 +279,24 @@ function initRecycleAnimation() {
 
     function drawClothing(ctx, x, y, type = 'shirt', color = '#6d6875') {
         ctx.fillStyle = color;
-        ctx.strokeStyle = color;
+        ctx.strokeStyle = '#333';
+        ctx.lineWidth = 1;
         switch (type) {
             case 'pants':
                 ctx.fillRect(x, y, 6, 15);
                 ctx.fillRect(x + 8, y, 6, 15);
+                ctx.strokeRect(x, y, 6, 15);
+                ctx.strokeRect(x + 8, y, 6, 15);
                 break;
             case 'shorts':
                 ctx.fillRect(x, y, 6, 10);
                 ctx.fillRect(x + 8, y, 6, 10);
+                ctx.strokeRect(x, y, 6, 10);
+                ctx.strokeRect(x + 8, y, 6, 10);
                 break;
             case 'bag':
                 ctx.fillRect(x + 2, y + 5, 10, 10);
+                ctx.strokeRect(x + 2, y + 5, 10, 10);
                 ctx.beginPath();
                 ctx.moveTo(x + 2, y + 5);
                 ctx.quadraticCurveTo(x + 7, y - 3, x + 12, y + 5);
@@ -303,15 +317,22 @@ function initRecycleAnimation() {
                 ctx.lineTo(x, y + 5); // left sleeve end
                 ctx.closePath();
                 ctx.fill();
+                ctx.stroke();
         }
     }
 
     function drawPerson(ctx, person) {
         const { x, y } = person;
+        ctx.lineWidth = 2;
         ctx.strokeStyle = '#000';
-        ctx.lineWidth = 1.5;
+        ctx.fillStyle = '#f2d0a9';
+        // head
         ctx.beginPath();
         ctx.arc(x, y - 12, 4, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+        // body
+        ctx.beginPath();
         ctx.moveTo(x, y - 8);
         ctx.lineTo(x, y);
         ctx.moveTo(x, y - 6);
@@ -329,15 +350,19 @@ function initRecycleAnimation() {
     }
 
     function spawnDroneToClothes() {
-        const target = clothes.find(c => !c.picked);
-        if (target) {
+        const candidates = clothes.filter(c => !c.picked);
+        if (candidates.length) {
+            candidates.sort((a, b) => a.x - b.x); // prioritize leftmost clothing
+            const target = candidates[0];
             drones.push({ x: -30, y: 40, state: 'toClothes', target, carry: [] });
         }
     }
 
     function spawnDroneToPerson() {
-        const target = people.find(p => !p.picked);
-        if (target) {
+        const candidates = people.filter(p => !p.picked);
+        if (candidates.length) {
+            candidates.sort((a, b) => a.x - b.x); // serve people from left to right
+            const target = candidates[0];
             drones.push({ x: -30, y: 40, state: 'toPerson', target, carry: [] });
         }
     }
@@ -361,10 +386,17 @@ function initRecycleAnimation() {
         ctx.save();
         ctx.shadowColor = '#00ffff';
         ctx.shadowBlur = 12;
-        ctx.fillStyle = '#8ecae6';
+        const domeGrad = ctx.createLinearGradient(hub.x - hubRadius, hub.y - hubRadius, hub.x + hubRadius, hub.y);
+        domeGrad.addColorStop(0, '#8ecae6');
+        domeGrad.addColorStop(1, '#219ebc');
+        ctx.fillStyle = domeGrad;
         ctx.beginPath();
         ctx.arc(hub.x, hub.y, hubRadius, Math.PI, 0);
         ctx.fill();
+        const baseGrad = ctx.createLinearGradient(hub.x - hubRadius, hub.y, hub.x - hubRadius, hub.y + baseHeight);
+        baseGrad.addColorStop(0, '#8ecae6');
+        baseGrad.addColorStop(1, '#219ebc');
+        ctx.fillStyle = baseGrad;
         ctx.fillRect(hub.x - hubRadius, hub.y, hubRadius * 2, baseHeight);
         ctx.restore();
         ctx.strokeStyle = '#023047';
@@ -449,11 +481,7 @@ function initRecycleAnimation() {
                     }
                     clothes.forEach(item => {
                         if (item.picked) {
-                            item.x = Math.random() * (W * 0.4) + 20;
-                            item.y = ground - 10;
-                            item.picked = false;
-                            item.type = clothingTypes[Math.floor(Math.random() * clothingTypes.length)];
-                            item.color = clothingColors[Math.floor(Math.random() * clothingColors.length)];
+                            Object.assign(item, spawnClothing());
                         }
                     });
                     people.forEach(p => {
@@ -477,15 +505,22 @@ function initRecycleAnimation() {
                 item.y = d.y + 20;
             });
 
-            ctx.fillStyle = '#adb5bd';
+            ctx.fillStyle = '#ced4da';
             ctx.fillRect(d.x - 10, d.y - 5, 20, 10);
-            ctx.strokeStyle = '#adb5bd';
+            ctx.fillStyle = '#6c757d';
+            ctx.fillRect(d.x - 5, d.y - 8, 10, 3);
+            ctx.strokeStyle = '#6c757d';
+            ctx.lineWidth = 2;
             ctx.beginPath();
             ctx.moveTo(d.x - 12, d.y - 7);
             ctx.lineTo(d.x - 20, d.y - 7);
             ctx.moveTo(d.x + 12, d.y - 7);
             ctx.lineTo(d.x + 20, d.y - 7);
             ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(d.x - 20, d.y - 7, 3, 0, Math.PI * 2);
+            ctx.arc(d.x + 20, d.y - 7, 3, 0, Math.PI * 2);
+            ctx.fill();
 
             d.carry.forEach(c => {
                 drawClothing(ctx, c.x - 7, c.y, c.type, c.color);
