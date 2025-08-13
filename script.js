@@ -423,13 +423,7 @@ function initRecycleAnimation() {
                 if (dist < 2) {
                     d.carry.push(d.target);
                     d.target.picked = true;
-                    const next = people.find(p => !p.picked);
-                    if (next) {
-                        d.state = 'toPerson';
-                        d.target = next;
-                    } else {
-                        d.state = 'toHub';
-                    }
+                    d.state = 'toHub';
                 } else {
                     d.x += (dx / dist) * 3;
                     d.y += (dy / dist) * 3;
@@ -440,12 +434,7 @@ function initRecycleAnimation() {
                 const dist = Math.hypot(dx, dy);
                 if (dist < 2) {
                     d.target.picked = true;
-                    const next = people.find(p => !p.picked);
-                    if (next) {
-                        d.target = next;
-                    } else {
-                        d.state = 'toHub';
-                    }
+                    d.state = 'toHub';
                 } else {
                     d.x += (dx / dist) * 3;
                     d.y += (dy / dist) * 3;
