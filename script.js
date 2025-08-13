@@ -363,10 +363,19 @@ function initRecycleAnimation() {
         ctx.fillRect(doorX, doorY, doorW, doorH);
         ctx.strokeRect(doorX, doorY, doorW, doorH);
         if (hubImg.complete) {
-            const scale = 0.2;
+            // keep the Thrift Token logo sized to the hub and centered
+            const maxWidth = hubRadius * 1.8;
+            const maxHeight = hubRadius * 0.9;
+            const scale = Math.min(maxWidth / hubImg.width, maxHeight / hubImg.height);
             const logoW = hubImg.width * scale;
             const logoH = hubImg.height * scale;
-            ctx.drawImage(hubImg, hub.x - logoW / 2, hub.y - hubRadius / 2 - logoH / 2, logoW, logoH);
+            ctx.drawImage(
+                hubImg,
+                hub.x - logoW / 2,
+                hub.y - hubRadius / 2 - logoH / 2,
+                logoW,
+                logoH
+            );
         }
 
         // textile pile background on left side
@@ -412,7 +421,6 @@ function initRecycleAnimation() {
                 const dy = (d.target.y - 20) - d.y;
                 const dist = Math.hypot(dx, dy);
                 if (dist < 2) {
-                    d.carry.push(d.target);
                     d.target.picked = true;
                     const next = people.find(p => !p.picked);
                     if (next) {
@@ -444,6 +452,8 @@ function initRecycleAnimation() {
                     people.forEach(p => {
                         if (p.picked) {
                             p.picked = false;
+                            p.x = Math.random() * (W * 0.4) + W * 0.5;
+                            p.y = ground - 10;
                             p.type = clothingTypes[Math.floor(Math.random() * clothingTypes.length)];
                             p.color = clothingColors[Math.floor(Math.random() * clothingColors.length)];
                         }
