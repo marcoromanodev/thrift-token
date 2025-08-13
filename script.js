@@ -257,6 +257,9 @@ function initRecycleAnimation() {
     const hubImg = new Image();
     hubImg.src = 'logo/thrifttoken.png';
 
+    const textileImg = new Image();
+    textileImg.src = 'textilepile.png';
+
     function drawClothing(ctx, x, y, type = 'shirt', color = '#6d6875') {
         ctx.fillStyle = color;
         ctx.strokeStyle = color;
@@ -304,15 +307,27 @@ function initRecycleAnimation() {
 
     function loop() {
         ctx.clearRect(0, 0, W, H);
+
+        // draw futuristic dome hub
         ctx.fillStyle = '#8ecae6';
-        ctx.fillRect(hub.x - 20, hub.y - 20, 40, 40);
-        if (hubImg.complete) {
-            ctx.drawImage(hubImg, hub.x - 18, hub.y - 18, 36, 36);
-        }
-        ctx.fillStyle = '#ffb703';
         ctx.beginPath();
-        ctx.arc(hub.x, hub.y + 25, 8, 0, Math.PI * 2);
+        ctx.arc(hub.x, hub.y, 20, Math.PI, 0);
         ctx.fill();
+        ctx.fillRect(hub.x - 20, hub.y, 40, 15);
+        ctx.fillStyle = '#ffb703';
+        ctx.fillRect(hub.x - 5, hub.y + 5, 10, 10);
+        if (hubImg.complete) {
+            ctx.drawImage(hubImg, hub.x - 10, hub.y - 5, 20, 10);
+        }
+
+        // textile pile background on left side
+        if (textileImg.complete) {
+            ctx.filter = 'contrast(1.2) saturate(1.4)';
+            const texW = 60;
+            const texH = 40;
+            ctx.drawImage(textileImg, 10, ground - texH, texW, texH);
+            ctx.filter = 'none';
+        }
 
         clothes.forEach(c => {
             if (!c.picked) {
