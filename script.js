@@ -317,14 +317,14 @@ function initRecycleAnimation() {
         ctx.fillStyle = '#ffb703';
         ctx.fillRect(hub.x - 5, hub.y + 5, 10, 10);
         if (hubImg.complete) {
-            ctx.drawImage(hubImg, hub.x - 10, hub.y - 5, 20, 10);
+            ctx.drawImage(hubImg, hub.x - 15, hub.y - 7.5, 30, 15);
         }
 
         // textile pile background on left side
         if (textileImg.complete) {
             ctx.filter = 'contrast(1.2) saturate(1.4)';
-            const texW = 60;
-            const texH = 40;
+            const texW = 90;
+            const texH = 60;
             ctx.drawImage(textileImg, 10, ground - texH, texW, texH);
             ctx.filter = 'none';
         }
