@@ -238,10 +238,15 @@ function initRecycleAnimation() {
     const ground = H - 20;
     const hub = { x: W - 60, y: ground - 40 };
 
+    const clothingTypes = ['shirt', 'pants', 'shorts', 'bag'];
+    const clothingColors = ['#e63946', '#ffb703', '#2a9d8f', '#457b9d', '#e07a5f'];
+
     const clothes = Array.from({ length: 5 }, () => ({
         x: Math.random() * (W * 0.4) + 20,
         y: ground - 10,
-        picked: false
+        picked: false,
+        type: clothingTypes[Math.floor(Math.random() * clothingTypes.length)],
+        color: clothingColors[Math.floor(Math.random() * clothingColors.length)]
     }));
     const drones = [];
     const tokens = [];
@@ -249,22 +254,44 @@ function initRecycleAnimation() {
     const tokenImg = new Image();
     tokenImg.src = 'coins/thrift.png';
 
-    function drawClothing(ctx, x, y) {
-        ctx.fillStyle = '#6d6875';
-        ctx.beginPath();
-        ctx.moveTo(x + 3, y); // left shoulder
-        ctx.lineTo(x + 6, y); // neck left
-        ctx.lineTo(x + 7.5, y + 3); // neck bottom
-        ctx.lineTo(x + 9, y); // neck right
-        ctx.lineTo(x + 12, y); // right shoulder
-        ctx.lineTo(x + 15, y + 5); // right sleeve end
-        ctx.lineTo(x + 12, y + 5); // right sleeve inner
-        ctx.lineTo(x + 12, y + 15); // right bottom
-        ctx.lineTo(x + 3, y + 15); // left bottom
-        ctx.lineTo(x + 3, y + 5); // left sleeve inner
-        ctx.lineTo(x, y + 5); // left sleeve end
-        ctx.closePath();
-        ctx.fill();
+    const hubImg = new Image();
+    hubImg.src = 'logo/thrifttoken.png';
+
+    function drawClothing(ctx, x, y, type = 'shirt', color = '#6d6875') {
+        ctx.fillStyle = color;
+        ctx.strokeStyle = color;
+        switch (type) {
+            case 'pants':
+                ctx.fillRect(x, y, 6, 15);
+                ctx.fillRect(x + 8, y, 6, 15);
+                break;
+            case 'shorts':
+                ctx.fillRect(x, y, 6, 10);
+                ctx.fillRect(x + 8, y, 6, 10);
+                break;
+            case 'bag':
+                ctx.fillRect(x + 2, y + 5, 10, 10);
+                ctx.beginPath();
+                ctx.moveTo(x + 2, y + 5);
+                ctx.quadraticCurveTo(x + 7, y - 3, x + 12, y + 5);
+                ctx.stroke();
+                break;
+            default:
+                ctx.beginPath();
+                ctx.moveTo(x + 3, y); // left shoulder
+                ctx.lineTo(x + 6, y); // neck left
+                ctx.lineTo(x + 7.5, y + 3); // neck bottom
+                ctx.lineTo(x + 9, y); // neck right
+                ctx.lineTo(x + 12, y); // right shoulder
+                ctx.lineTo(x + 15, y + 5); // right sleeve end
+                ctx.lineTo(x + 12, y + 5); // right sleeve inner
+                ctx.lineTo(x + 12, y + 15); // right bottom
+                ctx.lineTo(x + 3, y + 15); // left bottom
+                ctx.lineTo(x + 3, y + 5); // left sleeve inner
+                ctx.lineTo(x, y + 5); // left sleeve end
+                ctx.closePath();
+                ctx.fill();
+        }
     }
 
     function spawnDrone() {
@@ -279,6 +306,9 @@ function initRecycleAnimation() {
         ctx.clearRect(0, 0, W, H);
         ctx.fillStyle = '#8ecae6';
         ctx.fillRect(hub.x - 20, hub.y - 20, 40, 40);
+        if (hubImg.complete) {
+            ctx.drawImage(hubImg, hub.x - 18, hub.y - 18, 36, 36);
+        }
         ctx.fillStyle = '#ffb703';
         ctx.beginPath();
         ctx.arc(hub.x, hub.y + 25, 8, 0, Math.PI * 2);
@@ -286,7 +316,7 @@ function initRecycleAnimation() {
 
         clothes.forEach(c => {
             if (!c.picked) {
-                drawClothing(ctx, c.x, c.y - 15);
+                drawClothing(ctx, c.x, c.y - 15, c.type, c.color);
             }
         });
 
@@ -310,6 +340,11 @@ function initRecycleAnimation() {
                     for (let j = 0; j < 5; j++) {
                         tokens.push({ x: hub.x, y: hub.y, vx: Math.random() * 2 - 1, vy: -Math.random() * 2 - 1, life: 60 });
                     }
+                    d.target.x = Math.random() * (W * 0.4) + 20;
+                    d.target.y = ground - 10;
+                    d.target.picked = false;
+                    d.target.type = clothingTypes[Math.floor(Math.random() * clothingTypes.length)];
+                    d.target.color = clothingColors[Math.floor(Math.random() * clothingColors.length)];
                     drones.splice(i, 1);
                 } else {
                     d.x += (dx / dist) * 2;
@@ -330,7 +365,7 @@ function initRecycleAnimation() {
             ctx.stroke();
 
             if (d.target && d.target.picked && d.state === 'toHub') {
-                drawClothing(ctx, d.target.x - 7, d.target.y);
+                drawClothing(ctx, d.target.x - 7, d.target.y, d.target.type, d.target.color);
             }
         });
 
