@@ -274,6 +274,9 @@ function initRecycleAnimation() {
     const hubImg = new Image();
     hubImg.src = 'logo/thrifttoken.png';
 
+    const droneLogoImg = new Image();
+    droneLogoImg.src = 'logo/thrifttoken.png';
+
     const textileImg = new Image();
     textileImg.src = 'textilepile.png';
     let textileScale = 1;
@@ -514,6 +517,14 @@ function initRecycleAnimation() {
             ctx.fillRect(d.x - 10, d.y - 5, 20, 10);
             ctx.fillStyle = '#6c757d';
             ctx.fillRect(d.x - 5, d.y - 8, 10, 3);
+            if (droneLogoImg.complete) {
+                const maxLogoW = 14;
+                const maxLogoH = 8;
+                const scale = Math.min(maxLogoW / droneLogoImg.width, maxLogoH / droneLogoImg.height);
+                const logoW = droneLogoImg.width * scale;
+                const logoH = droneLogoImg.height * scale;
+                ctx.drawImage(droneLogoImg, d.x - logoW / 2, d.y - logoH / 2, logoW, logoH);
+            }
             ctx.strokeStyle = '#6c757d';
             ctx.lineWidth = 2;
             ctx.beginPath();
