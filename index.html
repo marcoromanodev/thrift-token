@@ -18,11 +18,14 @@
     <script defer src="script.js"></script>
 </head>
 <body>
+    <div id="purchaseTicker" class="purchase-ticker">
+        <div id="tickerTrack" class="ticker-track"></div>
+    </div>
     <header>
         <div class="logo">
             <a href="index.html#hero"><img src="logo/thrifttoken.png" alt="Thrift Token Logo" /></a>
         </div>
-        <button id="connectWallet" class="wallet-button">Connect Wallet</button>
+        <button id="connectWallet" class="wallet-button">BUY $THRIFT</button>
         <div class="dropdown-arrow" onclick="toggleMenu()">&#9660;</div>
         <div class="dropdown-menu" id="dropdown-menu">
             <ul>
@@ -39,6 +42,18 @@
             </ul>
         </div>
     </header>
+    <div id="walletModal" class="modal hidden">
+        <div class="modal-content">
+            <span id="modalClose" class="modal-close">&times;</span>
+            <h3>Connect Wallet</h3>
+            <button class="wallet-option">Best Wallet <i class="fa-solid fa-wallet"></i></button>
+            <button class="wallet-option">WalletConnect <i class="fa-solid fa-link"></i></button>
+            <button class="wallet-option">MetaMask <img src="coins/MetaMask.png" alt="MetaMask logo"/></button>
+            <button class="wallet-option">Base Wallet <i class="fa-solid fa-rocket"></i></button>
+            <button class="wallet-option">Coinbase Wallet <i class="fa-solid fa-coins"></i></button>
+            <button class="wallet-option">Pay with Card <i class="fa-solid fa-credit-card"></i></button>
+        </div>
+    </div>
     <button id="chatbotToggle" class="chatbot-toggle" aria-label="Open chat">
         <i class="fa-solid fa-comments"></i>
     </button>

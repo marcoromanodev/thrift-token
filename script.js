@@ -569,6 +569,8 @@ function initRecycleAnimation() {
 // MetaMask Wallet Connection
 document.addEventListener("DOMContentLoaded", function () {
     const connectWalletBtn = document.getElementById("connectWallet");
+    const walletModal = document.getElementById("walletModal");
+    const modalClose = document.getElementById("modalClose");
     const languageBtn = document.getElementById("languageButton");
     const languageContainer = document.querySelector(".language-container");
     const chatToggle = document.getElementById("chatbotToggle");
@@ -578,18 +580,36 @@ document.addEventListener("DOMContentLoaded", function () {
     const chatSend = document.getElementById("chatbotSend");
     const chatMessages = document.getElementById("chatbotMessages");
 
-    connectWalletBtn.addEventListener("click", async () => {
-        if (typeof window.ethereum !== "undefined") {
-            try {
-                const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
-                connectWalletBtn.textContent = "Wallet: " + accounts[0].slice(0, 6) + "..." + accounts[0].slice(-4);
-            } catch (error) {
-                console.error("Wallet connection failed:", error);
-            }
-        } else {
-            alert("Please install MetaMask to use this feature.");
-        }
+    connectWalletBtn?.addEventListener("click", () => {
+        walletModal?.classList.remove("hidden");
     });
+    modalClose?.addEventListener("click", () => walletModal.classList.add("hidden"));
+    walletModal?.addEventListener("click", (e) => {
+        if (e.target === walletModal) walletModal.classList.add("hidden");
+    });
+
+    const tickerTrack = document.getElementById("tickerTrack");
+    if (tickerTrack) {
+        const purchases = [
+            "[0x4eA9...b0FC2] bought 14.7K $THRIFT worth $0.44",
+            "[0xd83A...41d66] bought 3K $THRIFT worth $38.30",
+            "[0x83C0...DC2dF] bought 648 $THRIFT worth $8.27",
+            "[0xBc22...5d7aE] bought 18.7K $THRIFT worth $238.90",
+            "[0xd83A...41d66] bought 7K $THRIFT worth $89.36",
+            "[0x53EF...417A5] bought 906 $THRIFT worth $11.57",
+            "[0x566E...0DaB5] bought 77.9K $THRIFT worth $994.50",
+            "[0x9F16...4a713] bought 86.7K $THRIFT worth $1106.85",
+            "[0xD7ad...E5bE4] bought 6.3K $THRIFT worth $80.90",
+            "[0xC076...7ad47] bought 50 $THRIFT worth $0.64"
+        ];
+        purchases.forEach(p => {
+            const span = document.createElement("span");
+            span.className = "purchase-item";
+            span.textContent = p;
+            tickerTrack.appendChild(span);
+        });
+        tickerTrack.innerHTML += tickerTrack.innerHTML;
+    }
 
     if (languageBtn && languageContainer) {
         languageBtn.addEventListener("click", () => {
