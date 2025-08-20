@@ -19,20 +19,20 @@ function updateCountdown() {
 
     countdown.innerHTML = `
         <div class="time-segment">
-            <span class="count-num">${days}</span>
-            <span class="count-label">Days</span>
+            <span class="count-label">DAYS</span>
+            <span class="count-num">${String(days).padStart(2, '0')}</span>
         </div>
         <div class="time-segment">
-            <span class="count-num">${hrs}</span>
-            <span class="count-label">Hours</span>
+            <span class="count-label">HOURS</span>
+            <span class="count-num">${String(hrs).padStart(2, '0')}</span>
         </div>
         <div class="time-segment">
-            <span class="count-num">${mins}</span>
-            <span class="count-label">Minutes</span>
+            <span class="count-label">MINUTES</span>
+            <span class="count-num">${String(mins).padStart(2, '0')}</span>
         </div>
         <div class="time-segment">
-            <span class="count-num">${secs}</span>
-            <span class="count-label">Seconds</span>
+            <span class="count-label">SECONDS</span>
+            <span class="count-num">${String(secs).padStart(2, '0')}</span>
         </div>`;
 }
 setInterval(updateCountdown, 1000);
@@ -44,7 +44,7 @@ function initHeroIcoProgress() {
     if (!raisedEl || !barFill) return;
 
     const goal = 11_042_342.4;
-    const target = 10_948_249.75;
+    const target = 10_980_105.69;
     const duration = 3000;
     const start = performance.now();
 
@@ -57,6 +57,16 @@ function initHeroIcoProgress() {
     }
 
     requestAnimationFrame(step);
+}
+
+function initPresaleButton() {
+    const btn = document.getElementById("presaleButton");
+    if (!btn) return;
+    const liveText = "PRESALE IS LIVE";
+    const buyText = "BUY $THRIFT";
+    btn.addEventListener("mouseover", () => (btn.textContent = buyText));
+    btn.addEventListener("mouseout", () => (btn.textContent = liveText));
+    btn.addEventListener("click", () => (btn.textContent = buyText));
 }
 
 // Dropdown Menu Toggle
@@ -807,5 +817,11 @@ document.addEventListener("DOMContentLoaded", function () {
         initHeroIcoProgress();
     } catch (e) {
         console.error('initHeroIcoProgress failed', e);
+    }
+
+    try {
+        initPresaleButton();
+    } catch (e) {
+        console.error('initPresaleButton failed', e);
     }
 });
