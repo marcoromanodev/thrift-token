@@ -652,8 +652,13 @@ document.addEventListener("DOMContentLoaded", function () {
         tickerTrack.style.webkitAnimation = "";
     }
 
+    let lastTickerWidth = window.innerWidth;
     initPurchaseTicker();
-    window.addEventListener("resize", initPurchaseTicker);
+    window.addEventListener("resize", () => {
+        if (window.innerWidth === lastTickerWidth) return;
+        lastTickerWidth = window.innerWidth;
+        initPurchaseTicker();
+    });
 
     if (languageBtn && languageContainer) {
         languageBtn.addEventListener("click", () => {
