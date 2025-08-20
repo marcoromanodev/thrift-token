@@ -16,6 +16,11 @@ body {
     padding-top: 160px; /* Space for ticker and fixed header */
 }
 
+button {
+    box-shadow: 0 2px #000;
+    border: 1px solid #000;
+}
+
 /* Fixed header so logo, menu arrow, and wallet button stay visible */
 header {
     position: fixed;
@@ -1003,7 +1008,7 @@ footer {
 .chatbot-input button {
     background: #c69cd9;
     color: #fff;
-    border: none;
+    border: 1px solid #000;
     padding: 0 1rem;
     cursor: pointer;
 }
@@ -1052,9 +1057,11 @@ footer {
     z-index: 1000;
 }
 .ticker-track {
-    display: flex;
-    width: max-content;
+    display: inline-block;
+    white-space: nowrap;
+    will-change: transform;
     animation: ticker 20s linear infinite;
+    -webkit-animation: ticker 20s linear infinite;
 }
 .purchase-item {
     padding: 0 1.5rem;
@@ -1064,6 +1071,11 @@ footer {
 @keyframes ticker {
     from { transform: translateX(0); }
     to { transform: translateX(-50%); }
+}
+
+@-webkit-keyframes ticker {
+    from { -webkit-transform: translateX(0); }
+    to { -webkit-transform: translateX(-50%); }
 }
 
 /* Wallet modal */

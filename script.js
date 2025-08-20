@@ -589,7 +589,8 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     const tickerTrack = document.getElementById("tickerTrack");
-    if (tickerTrack) {
+    const tickerContainer = document.getElementById("purchaseTicker");
+    if (tickerTrack && tickerContainer) {
         const purchases = [
             "[0x4eA9...b0FC2] bought 14.7K $THRIFT worth $0.44",
             "[0xd83A...41d66] bought 3K $THRIFT worth $38.30",
@@ -608,7 +609,15 @@ document.addEventListener("DOMContentLoaded", function () {
             span.textContent = p;
             tickerTrack.appendChild(span);
         });
-        tickerTrack.innerHTML += tickerTrack.innerHTML;
+        const baseContent = tickerTrack.innerHTML;
+        let repetitions = 1;
+        while (tickerTrack.scrollWidth < tickerContainer.offsetWidth * 2) {
+            tickerTrack.innerHTML += baseContent;
+            repetitions++;
+        }
+        if (repetitions % 2 !== 0) {
+            tickerTrack.innerHTML += baseContent;
+        }
     }
 
     if (languageBtn && languageContainer) {
