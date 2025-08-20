@@ -38,6 +38,27 @@ function updateCountdown() {
 setInterval(updateCountdown, 1000);
 updateCountdown();
 
+function initHeroIcoProgress() {
+    const raisedEl = document.getElementById("usdRaised");
+    const barFill = document.getElementById("icoBarFill");
+    if (!raisedEl || !barFill) return;
+
+    const goal = 11_042_342.4;
+    const target = 10_948_249.75;
+    const duration = 3000;
+    const start = performance.now();
+
+    function step(now) {
+        const progress = Math.min((now - start) / duration, 1);
+        const current = target * progress;
+        raisedEl.textContent = "$" + current.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        barFill.style.width = (current / goal * 100) + "%";
+        if (progress < 1) requestAnimationFrame(step);
+    }
+
+    requestAnimationFrame(step);
+}
+
 // Dropdown Menu Toggle
 function toggleMenu() {
     const menu = document.getElementById("dropdown-menu");
@@ -761,5 +782,11 @@ document.addEventListener("DOMContentLoaded", function () {
         initICOProgressChart();
     } catch (e) {
         console.error('initICOProgressChart failed', e);
+    }
+
+    try {
+        initHeroIcoProgress();
+    } catch (e) {
+        console.error('initHeroIcoProgress failed', e);
     }
 });
