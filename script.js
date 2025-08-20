@@ -610,7 +610,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     const tickerTrack = document.getElementById("tickerTrack");
-    const tickerContainer = document.getElementById("purchaseTicker");
+    const tickerContainer = document.getElementById("tickerWrapper");
     if (tickerTrack && tickerContainer) {
         const purchases = [
             "[0x4eA9...b0FC2] bought 14.7K $THRIFT worth $0.44",

@@ -1082,6 +1082,30 @@ footer {
     border-bottom: 2px solid #000;
     overflow: hidden;
     z-index: 1000;
+    display: flex;
+    align-items: center;
+}
+.ticker-label {
+    margin-left: 10px;
+    font-weight: bold;
+    position: relative;
+    z-index: 2;
+}
+.ticker-wrapper {
+    flex: 1;
+    overflow: hidden;
+    position: relative;
+}
+.ticker-wrapper::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 60px;
+    height: 100%;
+    background: linear-gradient(to right, #fff 0%, rgba(255,255,255,0) 100%);
+    z-index: 1;
+    pointer-events: none;
 }
 .ticker-track {
     display: inline-block;
