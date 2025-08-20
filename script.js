@@ -609,9 +609,12 @@ document.addEventListener("DOMContentLoaded", function () {
         if (e.target === walletModal) walletModal.classList.add("hidden");
     });
 
-    const tickerTrack = document.getElementById("tickerTrack");
-    const tickerContainer = document.getElementById("tickerWrapper");
-    if (tickerTrack && tickerContainer) {
+    function initPurchaseTicker() {
+        const tickerTrack = document.getElementById("tickerTrack");
+        const tickerContainer = document.getElementById("tickerWrapper");
+        if (!(tickerTrack && tickerContainer)) return;
+
+        tickerTrack.innerHTML = "";
         const purchases = [
             "[0x4eA9...b0FC2] bought 14.7K $THRIFT worth $0.44",
             "[0xd83A...41d66] bought 3K $THRIFT worth $38.30",
@@ -630,6 +633,7 @@ document.addEventListener("DOMContentLoaded", function () {
             span.textContent = p;
             tickerTrack.appendChild(span);
         });
+
         const baseContent = tickerTrack.innerHTML;
         let repetitions = 1;
         while (tickerTrack.scrollWidth < tickerContainer.offsetWidth * 2) {
@@ -639,7 +643,17 @@ document.addEventListener("DOMContentLoaded", function () {
         if (repetitions % 2 !== 0) {
             tickerTrack.innerHTML += baseContent;
         }
+
+        tickerTrack.style.animation = "none";
+        tickerTrack.style.webkitAnimation = "none";
+        // Force reflow to restart animation so it runs smoothly on mobile
+        void tickerTrack.offsetWidth;
+        tickerTrack.style.animation = "";
+        tickerTrack.style.webkitAnimation = "";
     }
+
+    initPurchaseTicker();
+    window.addEventListener("resize", initPurchaseTicker);
 
     if (languageBtn && languageContainer) {
         languageBtn.addEventListener("click", () => {
