@@ -398,6 +398,33 @@ section > p:not(.graph-source):not(.total-supply)::before {
     color: #00ff00;
 }
 
+.ico-hero {
+    margin-top: 1rem;
+    color: #00ff00;
+}
+
+.ico-bar {
+    width: 80%;
+    height: 20px;
+    border: 2px solid #00ff00;
+    background: #000;
+    margin: 0.5rem auto;
+    position: relative;
+}
+
+.ico-bar-fill {
+    height: 100%;
+    background: #00ff00;
+    width: 0;
+}
+
+.ico-raised,
+.ico-note,
+.ico-price {
+    margin: 0.25rem 0;
+    font-weight: bold;
+}
+
 @media (max-width: 600px) {
     #hero {
         padding: 4rem 0;
