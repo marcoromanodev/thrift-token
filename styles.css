@@ -1111,8 +1111,8 @@ footer {
     display: inline-block;
     white-space: nowrap;
     will-change: transform;
-    animation: ticker 20s linear infinite;
-    -webkit-animation: ticker 20s linear infinite;
+    animation: ticker 50s linear infinite;
+    -webkit-animation: ticker 50s linear infinite;
 }
 .purchase-item {
     padding: 0 1.5rem;
