@@ -43,33 +43,58 @@ updateCountdown();
 
 function initHeroIcoProgress() {
     const raisedEl = document.getElementById("usdRaised");
+    const goalEl = document.getElementById("usdGoal");
     const barFill = document.getElementById("icoBarFill");
-    if (!raisedEl || !barFill) return;
+    if (!(raisedEl && goalEl && barFill)) return;
 
-    const goal = 1_000_000;
-    const target = 10_000;
+    const goal = 10_000;
+    goalEl.textContent = "$" + goal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     const duration = 3000;
-    const start = performance.now();
+    let start;
 
     function step(now) {
-        const progress = Math.min((now - start) / duration, 1);
-        const current = target * progress;
+        if (start === undefined) start = now;
+        let progress = (now - start) / duration;
+        if (progress >= 1) {
+            start = now;
+            progress = 0;
+        }
+        const current = goal * progress;
         raisedEl.textContent = "$" + current.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
         barFill.style.width = (current / goal * 100) + "%";
-        if (progress < 1) requestAnimationFrame(step);
+        requestAnimationFrame(step);
     }
 
     requestAnimationFrame(step);
 }
 
+async function updateLivePrices() {
+    const priceEl = document.getElementById("thriftPrice");
+    if (!priceEl) return;
+    try {
+        const res = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=matic-network,ethereum&vs_currencies=usd");
+        const data = await res.json();
+        const matic = data["matic-network"].usd;
+        const eth = data["ethereum"].usd;
+        const thriftPrice = ((matic + eth) * 0.0001).toFixed(4);
+        priceEl.textContent = `$${thriftPrice}`;
+    } catch (e) {
+        priceEl.textContent = "$0.10";
+    }
+}
+
 function initPresaleButton() {
     const btn = document.getElementById("presaleButton");
+    const walletModal = document.getElementById("walletModal");
     if (!btn) return;
     const liveText = "PRESALE IS LIVE";
     const buyText = "BUY $THRIFT NOW!";
     btn.addEventListener("mouseover", () => (btn.textContent = buyText));
     btn.addEventListener("mouseout", () => (btn.textContent = liveText));
-    btn.addEventListener("click", () => (btn.textContent = buyText));
+    btn.addEventListener("click", () => {
+        btn.textContent = buyText;
+        walletModal?.classList.remove("hidden");
+    });
 }
 
 // Dropdown Menu Toggle
@@ -814,6 +839,13 @@ document.addEventListener("DOMContentLoaded", function () {
         initICOProgressChart();
     } catch (e) {
         console.error('initICOProgressChart failed', e);
+    }
+
+    try {
+        updateLivePrices();
+        setInterval(updateLivePrices, 60000);
+    } catch (e) {
+        console.error('updateLivePrices failed', e);
     }
 
     try {

@@ -240,13 +240,30 @@ section > p:not(.graph-source):not(.total-supply)::before {
 }
 
 /* Wallet button */
-.wallet-button,
+.wallet-button {
+    background-color: #c69cd9;
+    border: 1px solid #000;
+    color: #ffffff;
+    padding: 10px 20px;
+    margin: 0.5rem 0 0;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    box-shadow: 0 2px #000;
+}
+.wallet-button:hover {
+    background-color: #b17cc7;
+}
+
+/* Presale button */
 .presale-button {
     background-color: #000;
     border: 2px solid #00ff00;
     color: #00ff00;
     padding: 10px 20px;
-    margin: 0.5rem 0 0;
+    margin: 0 0 1rem;
     font-size: 1rem;
     font-weight: bold;
     border-radius: 8px;
@@ -254,8 +271,6 @@ section > p:not(.graph-source):not(.total-supply)::before {
     transition: background 0.3s ease, color 0.3s ease;
     box-shadow: 0 2px #00ff00;
 }
-.presale-button { margin: 0 0 1rem; }
-.wallet-button:hover,
 .presale-button:hover {
     background-color: #00ff00;
     color: #000;
@@ -439,6 +454,9 @@ section > p:not(.graph-source):not(.total-supply)::before {
     margin-left: auto;
     margin-right: auto;
     color: #000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .metal-box {
