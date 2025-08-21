@@ -528,10 +528,21 @@ section > p:not(.graph-source):not(.total-supply)::before {
 }
 
 .ico-raised,
-.ico-note,
 .ico-price,
 .ico-wallet {
     margin: 0.25rem 0;
+    font-weight: bold;
+}
+
+.ico-note {
+    color: #fff;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    margin: 0;
+    text-align: center;
     font-weight: bold;
 }
 
