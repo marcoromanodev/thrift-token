@@ -41,15 +41,24 @@ function updateCountdown() {
 setInterval(updateCountdown, 1000);
 updateCountdown();
 
+let icoGoal = 0;
+function setIcoGoal(newGoal) {
+    icoGoal = newGoal;
+    const goalEl = document.getElementById("usdGoal");
+    if (goalEl) {
+        goalEl.textContent = "$" + icoGoal.toLocaleString(undefined, {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+        });
+    }
+}
+
 function initHeroIcoProgress() {
     const raisedEl = document.getElementById("usdRaised");
-    const goalEl = document.getElementById("usdGoal");
     const barFill = document.getElementById("icoBarFill");
-    if (!(raisedEl && goalEl && barFill)) return;
+    if (!(raisedEl && barFill)) return;
 
-    const goal = 10_000;
-    goalEl.textContent = "$" + goal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-    const duration = 3000;
+    const duration = 7500; // 60% slower than previous 3000ms
     let start;
 
     function step(now) {
@@ -59,9 +68,13 @@ function initHeroIcoProgress() {
             start = now;
             progress = 0;
         }
-        const current = goal * progress;
-        raisedEl.textContent = "$" + current.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-        barFill.style.width = (current / goal * 100) + "%";
+        const current = icoGoal * progress;
+        raisedEl.textContent = "$" + current.toLocaleString(undefined, {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+        });
+        const width = icoGoal ? (current / icoGoal * 100) : 0;
+        barFill.style.width = width + "%";
         requestAnimationFrame(step);
     }
 
@@ -76,8 +89,9 @@ async function updateLivePrices() {
         const data = await res.json();
         const matic = data["matic-network"].usd;
         const eth = data["ethereum"].usd;
-        const thriftPrice = ((matic + eth) * 0.0001).toFixed(4);
-        priceEl.textContent = `$${thriftPrice}`;
+        const thriftPriceNum = (matic + eth) * 0.0001;
+        priceEl.textContent = `$${thriftPriceNum.toFixed(4)}`;
+        setIcoGoal(thriftPriceNum * 90_000_000);
     } catch (e) {
         priceEl.textContent = "$0.10";
     }
