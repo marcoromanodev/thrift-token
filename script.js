@@ -46,8 +46,8 @@ function initHeroIcoProgress() {
     const barFill = document.getElementById("icoBarFill");
     if (!raisedEl || !barFill) return;
 
-    const goal = 11_042_342.4;
-    const target = 10_980_105.69;
+    const goal = 1_000_000;
+    const target = 10_000;
     const duration = 3000;
     const start = performance.now();
 
