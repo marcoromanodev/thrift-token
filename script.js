@@ -41,59 +41,50 @@ function updateCountdown() {
 setInterval(updateCountdown, 1000);
 updateCountdown();
 
-let icoGoal = 0;
-function setIcoGoal(newGoal) {
-    icoGoal = newGoal;
-    const goalEl = document.getElementById("usdGoal");
-    if (goalEl) {
-        goalEl.textContent = "$" + icoGoal.toLocaleString(undefined, {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-        });
-    }
-}
-
 function initHeroIcoProgress() {
     const raisedEl = document.getElementById("usdRaised");
+    const goalEl = document.getElementById("usdGoal");
     const barFill = document.getElementById("icoBarFill");
-    if (!(raisedEl && barFill)) return;
+    if (!(raisedEl && goalEl && barFill)) return;
 
-    const duration = 7500; // 60% slower than previous 3000ms
-    let start;
+    const goal = 11000;
+    goalEl.textContent = "$" + goal.toLocaleString(undefined, {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+    });
 
-    function step(now) {
-        if (start === undefined) start = now;
-        let progress = (now - start) / duration;
-        if (progress >= 1) {
-            start = now;
-            progress = 0;
+    let current = 9500 + Math.random() * 300;
+
+    function update() {
+        if (current < 10000) {
+            current = Math.min(current + Math.random() * 50, 10000);
+        } else {
+            current = 10000 - Math.random() * 50;
         }
-        const current = icoGoal * progress;
+
         raisedEl.textContent = "$" + current.toLocaleString(undefined, {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2,
         });
-        const width = icoGoal ? (current / icoGoal * 100) : 0;
+        const width = (current / goal) * 100;
         barFill.style.width = width + "%";
-        requestAnimationFrame(step);
     }
 
-    requestAnimationFrame(step);
+    update();
+    setInterval(update, 8000);
 }
 
 async function updateLivePrices() {
     const priceEl = document.getElementById("thriftPrice");
     if (!priceEl) return;
     try {
-        const res = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=matic-network,ethereum&vs_currencies=usd");
+        const res = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=matic-network&vs_currencies=usd");
         const data = await res.json();
         const matic = data["matic-network"].usd;
-        const eth = data["ethereum"].usd;
-        const thriftPriceNum = (matic + eth) * 0.0001;
+        const thriftPriceNum = matic * 0.01;
         priceEl.textContent = `$${thriftPriceNum.toFixed(4)}`;
-        setIcoGoal(thriftPriceNum * 90_000_000);
     } catch (e) {
-        priceEl.textContent = "$0.10";
+        priceEl.textContent = "$0.01";
     }
 }
 
@@ -857,7 +848,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     try {
         updateLivePrices();
-        setInterval(updateLivePrices, 60000);
+        setInterval(updateLivePrices, 10000);
     } catch (e) {
         console.error('updateLivePrices failed', e);
     }

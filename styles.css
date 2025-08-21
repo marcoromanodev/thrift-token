@@ -391,8 +391,11 @@ section > p:not(.graph-source):not(.total-supply)::before {
     background-color: #000;
     border: 2px solid #00ff00;
     padding: 0.5rem 1rem;
-    width: fit-content;
+    width: 100%;
+    max-width: 400px;
     margin: 0 auto;
+    text-align: center;
+    align-self: center;
 }
 
 .time-wrapper {
@@ -521,6 +524,7 @@ section > p:not(.graph-source):not(.total-supply)::before {
     height: 100%;
     background: #800080;
     width: 0;
+    transition: width 8s linear;
 }
 
 .ico-raised,
