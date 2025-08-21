@@ -18,21 +18,24 @@ function updateCountdown() {
     const secs = Math.floor((distance % (1000 * 60)) / 1000);
 
     countdown.innerHTML = `
-        <div class="time-segment">
-            <span class="count-label">DAYS</span>
-            <span class="count-num">${String(days).padStart(2, '0')}</span>
-        </div>
-        <div class="time-segment">
-            <span class="count-label">HOURS</span>
-            <span class="count-num">${String(hrs).padStart(2, '0')}</span>
-        </div>
-        <div class="time-segment">
-            <span class="count-label">MINUTES</span>
-            <span class="count-num">${String(mins).padStart(2, '0')}</span>
-        </div>
-        <div class="time-segment">
-            <span class="count-label">SECONDS</span>
-            <span class="count-num">${String(secs).padStart(2, '0')}</span>
+        <div class="launch-title">Days till Launch! <i class="fa-solid fa-rocket launch-rocket"></i></div>
+        <div class="time-wrapper">
+            <div class="time-segment">
+                <span class="count-label">DAYS</span>
+                <span class="count-num">${String(days).padStart(2, '0')}</span>
+            </div>
+            <div class="time-segment">
+                <span class="count-label">HOURS</span>
+                <span class="count-num">${String(hrs).padStart(2, '0')}</span>
+            </div>
+            <div class="time-segment">
+                <span class="count-label">MINUTES</span>
+                <span class="count-num">${String(mins).padStart(2, '0')}</span>
+            </div>
+            <div class="time-segment">
+                <span class="count-label">SECONDS</span>
+                <span class="count-num">${String(secs).padStart(2, '0')}</span>
+            </div>
         </div>`;
 }
 setInterval(updateCountdown, 1000);
@@ -63,7 +66,7 @@ function initPresaleButton() {
     const btn = document.getElementById("presaleButton");
     if (!btn) return;
     const liveText = "PRESALE IS LIVE";
-    const buyText = "BUY $THRIFT";
+    const buyText = "BUY $THRIFT NOW!";
     btn.addEventListener("mouseover", () => (btn.textContent = buyText));
     btn.addEventListener("mouseout", () => (btn.textContent = liveText));
     btn.addEventListener("click", () => (btn.textContent = buyText));
