@@ -670,10 +670,55 @@ document.addEventListener("DOMContentLoaded", function () {
         if (e.target === walletInfoModal) walletInfoModal.classList.add("hidden");
     });
 
+    async function connectToWallet(type) {
+        try {
+            const providers = window.ethereum?.providers || [window.ethereum];
+            let provider;
+            switch (type) {
+                case "metamask":
+                    provider = providers?.find(p => p.isMetaMask);
+                    break;
+                case "coinbase":
+                    provider = providers?.find(p => p.isCoinbaseWallet) || window.coinbaseWalletExtension;
+                    break;
+                case "base":
+                    provider = providers?.find(p => p.isBaseWallet || p.isBase);
+                    break;
+                case "walletconnect":
+                    provider = providers?.find(p => p.isWalletConnect);
+                    break;
+                case "best":
+                    provider = providers?.find(p => p.isBestWallet) || window.BestWallet;
+                    break;
+            }
+            if (provider) {
+                await provider.request({ method: "eth_requestAccounts" });
+                walletModal?.classList.add("hidden");
+                return;
+            }
+            const urls = {
+                best: "https://bestwallet.com",
+                walletconnect: "https://walletconnect.com",
+                metamask: "https://metamask.io/download/",
+                base: "https://www.base.org/wallet",
+                coinbase: "https://www.coinbase.com/wallet",
+            };
+            const fallback = urls[type];
+            if (fallback) {
+                window.open(fallback, "_blank", "noopener");
+            }
+        } catch (err) {
+            console.error("Wallet connection failed", err);
+        }
+    }
+
     walletOptions.forEach(option => {
         option.addEventListener("click", () => {
+            const wallet = option.getAttribute("data-wallet");
             const url = option.getAttribute("data-url");
-            if (url) {
+            if (wallet) {
+                connectToWallet(wallet);
+            } else if (url) {
                 window.open(url, "_blank", "noopener");
                 walletModal?.classList.add("hidden");
             }
