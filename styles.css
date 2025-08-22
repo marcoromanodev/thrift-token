@@ -633,6 +633,14 @@ section > p:not(.graph-source):not(.total-supply)::before {
     font-weight: bold;
 }
 
+.cta-box {
+    padding: 1rem;
+    margin: 1rem auto;
+    max-width: 800px;
+    text-align: center;
+    font-weight: bold;
+}
+
 .step-icon {
     width: 40px;
     height: 40px;
