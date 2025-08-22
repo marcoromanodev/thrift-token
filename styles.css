@@ -63,7 +63,7 @@ section > p {
     line-height: 1.6;
 }
 
-section > p:not(.graph-source):not(.total-supply) {
+section > p:not(.graph-source):not(.total-supply):not(.info-box) {
     font-weight: bold;
     background: #fff;
     border: 2px solid #c69cd9;
@@ -177,6 +177,7 @@ section > p:not(.graph-source):not(.total-supply)::before {
     margin: 1rem auto;
     max-width: 800px;
     line-height: 25px;
+    font-weight: bold;
 }
 
 .section-list {
