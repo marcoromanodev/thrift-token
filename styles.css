@@ -418,8 +418,8 @@ section > p:not(.graph-source):not(.total-supply)::before {
     display: flex;
     justify-content: center;
     gap: 0.5rem;
-    flex-wrap: wrap;
-    width: 100%;
+    flex-wrap: nowrap;
+    width: fit-content;
 }
 
 .launch-title {
