@@ -132,6 +132,18 @@ section > p:not(.graph-source):not(.total-supply) {
     display: block;
 }
 
+.mission-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.mission-icon {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 0.5rem;
+}
+
 section > p:not(.graph-source):not(.total-supply)::before {
     font-family: "Font Awesome 6 Free";
     font-weight: 900;
