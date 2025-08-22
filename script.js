@@ -111,9 +111,9 @@ function toggleMenu() {
 function initTugOfWar() {
     const tokenBar = document.getElementById("tokenBar");
     const wasteBar = document.getElementById("wasteBar");
-    const tokenCount = document.getElementById("tokenCount");
-    const wasteCount = document.getElementById("wasteCount");
-    if (!tokenBar || !wasteBar) return;
+    const tokenValue = document.getElementById("tokenValue");
+    const wasteValue = document.getElementById("wasteValue");
+    if (!tokenBar || !wasteBar || !tokenValue || !wasteValue) return;
 
     const maxTokens = 92_000_000;
     const maxWaste = 92_000_000_000; // kg (92 million tons)
@@ -132,8 +132,8 @@ function initTugOfWar() {
         tokenBar.style.width = progress * 100 + "%";
         wasteBar.style.width = (1 - progress) * 100 + "%";
 
-        tokenCount.textContent = Math.round(tokens).toLocaleString() + " Thrift Tokens";
-        wasteCount.textContent = Math.round(waste).toLocaleString() + " kg Waste";
+        tokenValue.textContent = Math.round(tokens).toLocaleString() + " Thrift Tokens";
+        wasteValue.textContent = Math.round(waste).toLocaleString() + " kg Waste";
     }
 
     step();

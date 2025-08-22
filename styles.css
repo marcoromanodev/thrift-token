@@ -109,7 +109,10 @@ section > p:not(.graph-source):not(.total-supply) {
     color: #c69cd9;
 }
 .tug-labels .waste-label {
-    color: #c69cd9;
+    color: #ff0000;
+}
+.tug-labels i {
+    margin-right: 0.25rem;
 }
 
 .annual-count {
