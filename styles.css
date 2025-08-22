@@ -459,6 +459,7 @@ section > p:not(.graph-source):not(.total-supply)::before {
     display: flex;
     flex-direction: column;
     align-items: center;
+    text-align: center;
 }
 
 .metal-box {
@@ -550,14 +551,15 @@ section > p:not(.graph-source):not(.total-supply)::before {
     margin-top: 1rem;
 }
 
-.ico-wallet a {
-    color: #00ff00;
+#walletInfoLink {
+    color: #c69cd9;
     text-decoration: underline;
 }
 
 .w3p-logo {
-    color: #00ff00;
-    text-decoration: none;
+    display: inline-block;
+    height: 1em;
+    vertical-align: middle;
 }
 
 .powered-by {
