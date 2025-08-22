@@ -588,6 +588,12 @@ section > p:not(.graph-source):not(.total-supply)::before {
         box-sizing: border-box;
     }
 
+    .time-wrapper {
+        flex-wrap: nowrap;
+        gap: 0.25rem;
+        width: fit-content;
+    }
+
     .time-segment {
         padding: 0 0.25rem;
     }
