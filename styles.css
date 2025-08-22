@@ -892,6 +892,7 @@ footer {
     gap: 0.5rem;
     font-size: 2rem;
     color: #c69cd9;
+    text-shadow: -1px 0 0 #000, 1px 0 0 #000, 0 1px 0 #000, 0 -1px 0 #000;
     margin-bottom: 0.5rem;
 }
 
@@ -959,6 +960,7 @@ footer {
     gap: 0.5rem;
     font-size: 2rem;
     color: #c69cd9;
+    text-shadow: -1px 0 0 #000, 1px 0 0 #000, 0 1px 0 #000, 0 -1px 0 #000;
     margin-bottom: 1rem;
 }
 
