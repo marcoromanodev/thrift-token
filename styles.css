@@ -379,7 +379,7 @@ section > p:not(.graph-source):not(.total-supply)::before {
     z-index: 0;
 }
 #countdown {
-    display: flex;
+    display: inline-flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -391,7 +391,6 @@ section > p:not(.graph-source):not(.total-supply)::before {
     background-color: #000;
     border: 2px solid #00ff00;
     padding: 0.5rem 1rem;
-    width: fit-content;
     margin: 0 auto;
     text-align: center;
     align-self: center;
@@ -558,7 +557,7 @@ section > p:not(.graph-source):not(.total-supply)::before {
 
 .w3p-logo {
     display: inline-block;
-    height: 1em;
+    height: 0.8em;
     vertical-align: middle;
 }
 
@@ -573,15 +572,19 @@ section > p:not(.graph-source):not(.total-supply)::before {
     }
 
     #countdown {
+        display: inline-flex;
         font-size: clamp(1.5rem, 8vw, 2.5rem);
         gap: 0.25rem;
         padding: 0.25rem 0.5rem;
-        width: fit-content;
         margin: 0 auto;
     }
 
     .time-segment {
         padding: 0 0.25rem;
+    }
+
+    .w3p-logo {
+        height: 1.2em;
     }
 }
 
