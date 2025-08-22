@@ -1057,6 +1057,7 @@ footer {
     cursor: pointer;
     transition: background 0.3s ease;
     display: inline-block;
+    box-shadow: 0 2px #000;
 }
 
 .whitepaper-button:hover {

@@ -646,6 +646,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const walletInfoLink = document.getElementById("walletInfoLink");
     const walletInfoModal = document.getElementById("walletInfoModal");
     const walletInfoClose = document.getElementById("walletInfoClose");
+    const walletOptions = document.querySelectorAll(".wallet-option");
 
     connectWalletBtn?.addEventListener("click", () => {
         walletModal?.classList.remove("hidden");
@@ -662,6 +663,16 @@ document.addEventListener("DOMContentLoaded", function () {
     walletInfoClose?.addEventListener("click", () => walletInfoModal?.classList.add("hidden"));
     walletInfoModal?.addEventListener("click", (e) => {
         if (e.target === walletInfoModal) walletInfoModal.classList.add("hidden");
+    });
+
+    walletOptions.forEach(option => {
+        option.addEventListener("click", () => {
+            const url = option.getAttribute("data-url");
+            if (url) {
+                window.open(url, "_blank", "noopener");
+                walletModal?.classList.add("hidden");
+            }
+        });
     });
 
     function initPurchaseTicker() {
