@@ -643,6 +643,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const chatInput = document.getElementById("chatbotInput");
     const chatSend = document.getElementById("chatbotSend");
     const chatMessages = document.getElementById("chatbotMessages");
+    const walletInfoLink = document.getElementById("walletInfoLink");
+    const walletInfoModal = document.getElementById("walletInfoModal");
+    const walletInfoClose = document.getElementById("walletInfoClose");
 
     connectWalletBtn?.addEventListener("click", () => {
         walletModal?.classList.remove("hidden");
@@ -650,6 +653,15 @@ document.addEventListener("DOMContentLoaded", function () {
     modalClose?.addEventListener("click", () => walletModal.classList.add("hidden"));
     walletModal?.addEventListener("click", (e) => {
         if (e.target === walletModal) walletModal.classList.add("hidden");
+    });
+
+    walletInfoLink?.addEventListener("click", (e) => {
+        e.preventDefault();
+        walletInfoModal?.classList.remove("hidden");
+    });
+    walletInfoClose?.addEventListener("click", () => walletInfoModal?.classList.add("hidden"));
+    walletInfoModal?.addEventListener("click", (e) => {
+        if (e.target === walletInfoModal) walletInfoModal.classList.add("hidden");
     });
 
     function initPurchaseTicker() {

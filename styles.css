@@ -391,8 +391,7 @@ section > p:not(.graph-source):not(.total-supply)::before {
     background-color: #000;
     border: 2px solid #00ff00;
     padding: 0.5rem 1rem;
-    width: 100%;
-    max-width: 400px;
+    width: fit-content;
     margin: 0 auto;
     text-align: center;
     align-self: center;
@@ -551,9 +550,14 @@ section > p:not(.graph-source):not(.total-supply)::before {
     margin-top: 1rem;
 }
 
+.ico-wallet a {
+    color: #00ff00;
+    text-decoration: underline;
+}
 
 .w3p-logo {
     color: #00ff00;
+    text-decoration: none;
 }
 
 .powered-by {
@@ -1316,4 +1320,23 @@ footer {
     width: 24px;
     height: 24px;
     margin-left: 10px;
+}
+
+.wallet-steps {
+    margin: 1rem 0;
+    padding-left: 1.25rem;
+}
+
+.download-button {
+    display: block;
+    background: #c69cd9;
+    color: #fff;
+    border: 2px solid #000;
+    border-radius: 8px;
+    padding: 10px 15px;
+    margin: 10px 0;
+    text-align: center;
+    font-weight: bold;
+    box-shadow: 0 2px #000;
+    text-decoration: none;
 }

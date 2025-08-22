@@ -57,6 +57,19 @@
             <button class="wallet-option">Pay with Card <i class="fa-solid fa-credit-card"></i></button>
         </div>
     </div>
+    <div id="walletInfoModal" class="modal hidden">
+        <div class="modal-content">
+            <span id="walletInfoClose" class="modal-close">&times;</span>
+            <h3>Need a wallet?</h3>
+            <p>Best Wallet is a beginner-friendly app that makes it easy to buy our presale token. Follow the steps below to get started.</p>
+            <ol class="wallet-steps">
+                <li>Download the Best Wallet App</li>
+                <li>Create your account</li>
+                <li>Buy in-app with card or crypto</li>
+            </ol>
+            <a href="https://bestwallet.com" target="_blank" rel="noopener" class="download-button">Download Best Wallet</a>
+        </div>
+    </div>
     <button id="chatbotToggle" class="chatbot-toggle" aria-label="Open chat">
         <i class="fa-solid fa-comments"></i>
     </button>
@@ -89,7 +102,7 @@
             </div>
             <p class="ico-raised">USD RAISED: <span id="usdRaised">$0</span> / <span id="usdGoal">$11,000.00</span></p>
             <p class="ico-price">1 $THRIFT = <span id="thriftPrice">$0.10</span></p>
-            <p class="ico-wallet">Don't have a wallet?<br/><span class="powered-by">Powered by <span class="w3p-logo">w3p</span></span></p>
+            <p class="ico-wallet"><a href="#" id="walletInfoLink">Don't have a wallet?</a><br/><span class="powered-by">Powered by <a href="https://web3paymentsolutions.io" target="_blank" rel="noopener" class="w3p-logo">w3p</a></span></p>
         </div>
     </section>
 
