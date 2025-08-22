@@ -1409,3 +1409,8 @@ footer {
     box-shadow: 0 2px #000;
     text-decoration: none;
 }
+
+/* Notebook paper background */
+.notebook-paper {
+    background: repeating-linear-gradient(#fff, #fff 24px, #e2f0ff 24px, #e2f0ff 25px);
+}
