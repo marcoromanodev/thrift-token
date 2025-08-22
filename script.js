@@ -300,9 +300,8 @@ function initRecycleAnimation() {
     const W = canvas.width;
     const H = canvas.height;
     const ground = H - 20;
-    const hub = { x: W - 60, y: ground - 40 };
-    const hubRadius = 25;
-    const baseHeight = 20;
+    const hub = { x: W - 60, y: ground - 20, width: 60, height: 40 };
+    const droneSpeed = 1;
 
     const clothingTypes = ['shirt', 'pants', 'shorts', 'bag'];
     const clothingColors = ['#e63946', '#ffb703', '#2a9d8f', '#457b9d', '#e07a5f'];
@@ -311,7 +310,7 @@ function initRecycleAnimation() {
         let x;
         do {
             x = Math.random() * (W * 0.4) + 20;
-        } while (x > hub.x - hubRadius - 40); // keep clothes away from the hub
+        } while (x > hub.x - hub.width / 2 - 40); // keep clothes away from the hub
         return {
             x,
             y: ground - 10,
@@ -452,47 +451,53 @@ function initRecycleAnimation() {
     function loop() {
         ctx.clearRect(0, 0, W, H);
 
-        // draw futuristic dome hub
+        // draw metal box hub with bolts
+        const hubLeft = hub.x - hub.width / 2;
+        const hubTop = hub.y - hub.height / 2;
         ctx.save();
-        ctx.shadowColor = '#00ffff';
-        ctx.shadowBlur = 12;
-        const domeGrad = ctx.createLinearGradient(hub.x - hubRadius, hub.y - hubRadius, hub.x + hubRadius, hub.y);
-        domeGrad.addColorStop(0, '#8ecae6');
-        domeGrad.addColorStop(1, '#219ebc');
-        ctx.fillStyle = domeGrad;
-        ctx.beginPath();
-        ctx.arc(hub.x, hub.y, hubRadius, Math.PI, 0);
-        ctx.fill();
-        const baseGrad = ctx.createLinearGradient(hub.x - hubRadius, hub.y, hub.x - hubRadius, hub.y + baseHeight);
-        baseGrad.addColorStop(0, '#8ecae6');
-        baseGrad.addColorStop(1, '#219ebc');
-        ctx.fillStyle = baseGrad;
-        ctx.fillRect(hub.x - hubRadius, hub.y, hubRadius * 2, baseHeight);
+        ctx.shadowColor = '#000';
+        ctx.shadowBlur = 6;
+        const hubGrad = ctx.createLinearGradient(hubLeft, hubTop, hubLeft + hub.width, hubTop + hub.height);
+        hubGrad.addColorStop(0, '#b0b0b0');
+        hubGrad.addColorStop(1, '#7a7a7a');
+        ctx.fillStyle = hubGrad;
+        ctx.fillRect(hubLeft, hubTop, hub.width, hub.height);
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = '#444';
+        ctx.strokeRect(hubLeft, hubTop, hub.width, hub.height);
         ctx.restore();
-        ctx.strokeStyle = '#023047';
-        ctx.lineWidth = 2;
-        ctx.beginPath();
-        ctx.arc(hub.x, hub.y, hubRadius, Math.PI, 0);
-        ctx.stroke();
-        ctx.strokeRect(hub.x - hubRadius, hub.y, hubRadius * 2, baseHeight);
-        ctx.fillStyle = '#ffb703';
-        const doorX = hub.x - 5;
-        const doorY = hub.y + baseHeight / 2;
-        const doorW = 10;
-        const doorH = baseHeight / 2;
-        ctx.fillRect(doorX, doorY, doorW, doorH);
-        ctx.strokeRect(doorX, doorY, doorW, doorH);
+
+        // bolts at corners
+        const bolts = [
+            { x: hubLeft + 8, y: hubTop + 8 },
+            { x: hubLeft + hub.width - 8, y: hubTop + 8 },
+            { x: hubLeft + 8, y: hubTop + hub.height - 8 },
+            { x: hubLeft + hub.width - 8, y: hubTop + hub.height - 8 }
+        ];
+        bolts.forEach(b => {
+            ctx.fillStyle = '#ccc';
+            ctx.strokeStyle = '#666';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.arc(b.x, b.y, 4, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.stroke();
+            ctx.fillStyle = '#666';
+            ctx.beginPath();
+            ctx.arc(b.x, b.y, 1.5, 0, Math.PI * 2);
+            ctx.fill();
+        });
+
         if (hubImg.complete) {
-            // keep the Thrift Token logo sized to the hub and centered
-            const maxWidth = hubRadius * 1.8;
-            const maxHeight = hubRadius * 0.9;
+            const maxWidth = hub.width * 0.6;
+            const maxHeight = hub.height * 0.6;
             const scale = Math.min(maxWidth / hubImg.width, maxHeight / hubImg.height);
             const logoW = hubImg.width * scale;
             const logoH = hubImg.height * scale;
             ctx.drawImage(
                 hubImg,
                 hub.x - logoW / 2,
-                hub.y - hubRadius / 2 - logoH / 2,
+                hub.y - logoH / 2,
                 logoW,
                 logoH
             );
@@ -529,8 +534,8 @@ function initRecycleAnimation() {
                     d.target.picked = true;
                     d.state = 'toHub';
                 } else {
-                    d.x += (dx / dist) * 3;
-                    d.y += (dy / dist) * 3;
+                    d.x += (dx / dist) * droneSpeed;
+                    d.y += (dy / dist) * droneSpeed;
                 }
             } else if (d.state === 'toPerson') {
                 const dx = d.target.x - d.x;
@@ -540,16 +545,16 @@ function initRecycleAnimation() {
                     d.target.picked = true;
                     d.state = 'toHub';
                 } else {
-                    d.x += (dx / dist) * 3;
-                    d.y += (dy / dist) * 3;
+                    d.x += (dx / dist) * droneSpeed;
+                    d.y += (dy / dist) * droneSpeed;
                 }
             } else if (d.state === 'toHub') {
                 const dx = hub.x - d.x;
-                const dy = hub.y - d.y;
+                const dy = (hub.y - hub.height / 2) - d.y;
                 const dist = Math.hypot(dx, dy);
                 if (dist < 2) {
                     for (let j = 0; j < 5; j++) {
-                        tokens.push({ x: hub.x, y: hub.y, vx: Math.random() * 2 - 1, vy: -Math.random() * 2 - 1, life: 60 });
+                        tokens.push({ x: hub.x, y: hub.y - hub.height / 2, vx: Math.random() * 2 - 1, vy: -Math.random() * 2 - 1, life: 60 });
                     }
                     clothes.forEach(item => {
                         if (item.picked) {
@@ -567,8 +572,8 @@ function initRecycleAnimation() {
                     });
                     drones.splice(i, 1);
                 } else {
-                    d.x += (dx / dist) * 3;
-                    d.y += (dy / dist) * 3;
+                    d.x += (dx / dist) * droneSpeed;
+                    d.y += (dy / dist) * droneSpeed;
                 }
             }
 
