@@ -628,11 +628,7 @@ section > p:not(.graph-source):not(.total-supply)::before {
     max-width: 1000px;
 }
 .feature-card, .step {
-    background: #fff;
     padding: 1rem;
-    border: 2px solid #c69cd9;
-    border-radius: 10px;
-    box-shadow: 4px 4px 0 #000;
     flex: 1 1 200px;
     font-weight: bold;
 }
