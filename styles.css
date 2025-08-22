@@ -153,15 +153,26 @@ section > p:not(.graph-source):not(.total-supply)::before {
 }
 
 .info-box {
-    background: repeating-linear-gradient(
-        to bottom,
-        #fff,
-        #fff 24px,
-        #d0e0ff 24px,
-        #d0e0ff 25px
-    );
+    background-color: #fff;
+    background-image:
+        linear-gradient(
+            to right,
+            transparent 40px,
+            #f7c1c1 40px,
+            #f7c1c1 42px,
+            transparent 42px
+        ),
+        repeating-linear-gradient(
+            to bottom,
+            #fff,
+            #fff 24px,
+            #d0e0ff 24px,
+            #d0e0ff 25px
+        );
+    background-repeat: no-repeat, repeat;
+    background-size: 100% 100%, 100% 25px;
     border: 1px solid #ccc;
-    padding: 1rem;
+    padding: 1rem 1rem 1rem 3rem;
     margin: 1rem auto;
     max-width: 800px;
     line-height: 25px;
