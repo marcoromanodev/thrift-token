@@ -725,32 +725,37 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
+    const purchases = [
+        "[0x4eA9...b0FC2] bought 14.7K $THRIFT worth $0.44",
+        "[0xd83A...41d66] bought 3K $THRIFT worth $38.30",
+        "[0x83C0...DC2dF] bought 648 $THRIFT worth $8.27",
+        "[0xBc22...5d7aE] bought 18.7K $THRIFT worth $238.90",
+        "[0xd83A...41d66] bought 7K $THRIFT worth $89.36",
+        "[0x53EF...417A5] bought 906 $THRIFT worth $11.57",
+        "[0x566E...0DaB5] bought 77.9K $THRIFT worth $994.50",
+        "[0x9F16...4a713] bought 86.7K $THRIFT worth $1106.85",
+        "[0xD7ad...E5bE4] bought 6.3K $THRIFT worth $80.90",
+        "[0xC076...7ad47] bought 50 $THRIFT worth $0.64"
+    ];
+
+    function generateRandomPurchase() {
+        const randHex = () => Math.floor(Math.random() * 0xfffff).toString(16).padStart(5, "0");
+        const address = `[0x${randHex()}...${randHex()}]`;
+        const tokens = Math.random() * 100000 + 100;
+        const displayTokens = tokens >= 1000 ? `${(tokens / 1000).toFixed(1)}K` : tokens.toFixed(0);
+        const usd = (tokens * 0.0125).toFixed(2);
+        return `${address} bought ${displayTokens} $THRIFT worth $${usd}`;
+    }
+
     function initPurchaseTicker() {
         const tickerTrack = document.getElementById("tickerTrack");
         const tickerContainer = document.getElementById("tickerWrapper");
         if (!(tickerTrack && tickerContainer)) return;
 
-        tickerTrack.innerHTML = "";
-        const purchases = [
-            "[0x4eA9...b0FC2] bought 14.7K $THRIFT worth $0.44",
-            "[0xd83A...41d66] bought 3K $THRIFT worth $38.30",
-            "[0x83C0...DC2dF] bought 648 $THRIFT worth $8.27",
-            "[0xBc22...5d7aE] bought 18.7K $THRIFT worth $238.90",
-            "[0xd83A...41d66] bought 7K $THRIFT worth $89.36",
-            "[0x53EF...417A5] bought 906 $THRIFT worth $11.57",
-            "[0x566E...0DaB5] bought 77.9K $THRIFT worth $994.50",
-            "[0x9F16...4a713] bought 86.7K $THRIFT worth $1106.85",
-            "[0xD7ad...E5bE4] bought 6.3K $THRIFT worth $80.90",
-            "[0xC076...7ad47] bought 50 $THRIFT worth $0.64"
-        ];
-        purchases.forEach(p => {
-            const span = document.createElement("span");
-            span.className = "purchase-item";
-            span.textContent = p;
-            tickerTrack.appendChild(span);
-        });
-
-        const baseContent = tickerTrack.innerHTML;
+        const baseContent = purchases
+            .map(p => `<span class="purchase-item">${p}</span>`)
+            .join("");
+        tickerTrack.innerHTML = baseContent;
         let repetitions = 1;
         while (tickerTrack.scrollWidth < tickerContainer.offsetWidth * 2) {
             tickerTrack.innerHTML += baseContent;
@@ -762,10 +767,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
         tickerTrack.style.animation = "none";
         tickerTrack.style.webkitAnimation = "none";
-        // Force reflow to restart animation so it runs smoothly on mobile
         void tickerTrack.offsetWidth;
         tickerTrack.style.animation = "";
         tickerTrack.style.webkitAnimation = "";
+    }
+
+    function addRandomPurchase() {
+        purchases.push(generateRandomPurchase());
+        if (purchases.length > 20) purchases.shift();
+        initPurchaseTicker();
     }
 
     let lastTickerWidth = window.innerWidth;
@@ -775,6 +785,8 @@ document.addEventListener("DOMContentLoaded", function () {
         lastTickerWidth = window.innerWidth;
         initPurchaseTicker();
     });
+
+    setInterval(addRandomPurchase, 7000);
 
     if (languageBtn && languageContainer) {
         languageBtn.addEventListener("click", () => {
