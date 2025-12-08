@@ -303,8 +303,8 @@ function initRecycleAnimation() {
     const hub = { x: W - 60, y: ground - 20, width: 60, height: 40 };
     const droneSpeed = 1;
 
-    const clothingTypes = ['shirt', 'pants', 'shorts', 'bag'];
-    const clothingColors = ['#e63946', '#ffb703', '#2a9d8f', '#457b9d', '#e07a5f'];
+    const clothingTypes = ['shirt', 'pants', 'shorts', 'bag', 'hoodie', 'dress', 'hat'];
+    const clothingColors = ['#e63946', '#ffb703', '#2a9d8f', '#457b9d', '#e07a5f', '#8ac926', '#ffafcc'];
 
     function spawnClothing() {
         let x;
@@ -368,6 +368,47 @@ function initRecycleAnimation() {
                 ctx.moveTo(x + 2, y + 5);
                 ctx.quadraticCurveTo(x + 7, y - 3, x + 12, y + 5);
                 ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(x + 7, y + 5);
+                ctx.lineTo(x + 7, y + 2);
+                ctx.stroke();
+                break;
+            case 'hoodie':
+                ctx.beginPath();
+                ctx.moveTo(x + 3, y + 2);
+                ctx.lineTo(x + 7, y - 4);
+                ctx.lineTo(x + 11, y + 2);
+                ctx.lineTo(x + 15, y + 2);
+                ctx.lineTo(x + 15, y + 16);
+                ctx.lineTo(x, y + 16);
+                ctx.lineTo(x, y + 2);
+                ctx.closePath();
+                ctx.fill();
+                ctx.stroke();
+                ctx.strokeRect(x + 6, y + 6, 4, 8);
+                break;
+            case 'dress':
+                ctx.beginPath();
+                ctx.moveTo(x + 8, y);
+                ctx.lineTo(x + 3, y + 6);
+                ctx.lineTo(x + 1, y + 16);
+                ctx.lineTo(x + 15, y + 16);
+                ctx.lineTo(x + 13, y + 6);
+                ctx.closePath();
+                ctx.fill();
+                ctx.stroke();
+                ctx.strokeStyle = 'rgba(0,0,0,0.35)';
+                ctx.beginPath();
+                ctx.moveTo(x + 4, y + 8);
+                ctx.lineTo(x + 12, y + 8);
+                ctx.stroke();
+                ctx.strokeStyle = '#333';
+                break;
+            case 'hat':
+                ctx.fillRect(x, y + 8, 16, 3);
+                ctx.strokeRect(x, y + 8, 16, 3);
+                ctx.fillRect(x + 4, y + 2, 8, 6);
+                ctx.strokeRect(x + 4, y + 2, 8, 6);
                 break;
             default:
                 ctx.beginPath();
@@ -404,48 +445,41 @@ function initRecycleAnimation() {
 
     function drawPerson(ctx, person) {
         const { x, y } = person;
-        const bodyWidth = 18;
-        const bodyHeight = 26;
         const headRadius = 6;
+        const torsoLength = 18;
 
-        // torso
-        const torsoX = x - bodyWidth / 2;
-        const torsoY = y - bodyHeight + 4;
-        const torsoGrad = ctx.createLinearGradient(torsoX, torsoY, torsoX, torsoY + bodyHeight);
-        torsoGrad.addColorStop(0, '#1f2a44');
-        torsoGrad.addColorStop(1, '#0f172a');
-        ctx.fillStyle = torsoGrad;
-        ctx.strokeStyle = 'rgba(255,255,255,0.1)';
-        drawRoundedRect(ctx, torsoX, torsoY, bodyWidth, bodyHeight, 6);
-        ctx.fill();
-        ctx.stroke();
+        ctx.strokeStyle = '#0f172a';
+        ctx.lineWidth = 2;
 
         // head
-        ctx.fillStyle = '#f2d0a9';
         ctx.beginPath();
-        ctx.arc(x, torsoY - headRadius + 2, headRadius, 0, Math.PI * 2);
-        ctx.fill();
+        ctx.arc(x, y - torsoLength - headRadius + 2, headRadius, 0, Math.PI * 2);
+        ctx.stroke();
 
-        // accent collar
-        ctx.fillStyle = '#ff9d5c';
-        drawRoundedRect(ctx, torsoX + 4, torsoY + 4, bodyWidth - 8, 6, 3);
-        ctx.fill();
+        // body
+        ctx.beginPath();
+        ctx.moveTo(x, y - torsoLength);
+        ctx.lineTo(x, y - 2);
+        ctx.stroke();
 
         // arms
-        ctx.fillStyle = '#1f2a44';
-        drawRoundedRect(ctx, torsoX - 8, torsoY + 6, 8, 12, 4);
-        ctx.fill();
-        drawRoundedRect(ctx, torsoX + bodyWidth, torsoY + 6, 8, 12, 4);
-        ctx.fill();
+        ctx.beginPath();
+        ctx.moveTo(x, y - torsoLength + 6);
+        ctx.lineTo(x - 10, y - torsoLength + 10);
+        ctx.moveTo(x, y - torsoLength + 6);
+        ctx.lineTo(x + 10, y - torsoLength + 10);
+        ctx.stroke();
 
         // legs
-        drawRoundedRect(ctx, x - 9, y - 6, 8, 14, 3);
-        ctx.fill();
-        drawRoundedRect(ctx, x + 1, y - 6, 8, 14, 3);
-        ctx.fill();
+        ctx.beginPath();
+        ctx.moveTo(x, y - 2);
+        ctx.lineTo(x - 8, y + 10);
+        ctx.moveTo(x, y - 2);
+        ctx.lineTo(x + 8, y + 10);
+        ctx.stroke();
 
         if (!person.picked) {
-            drawClothing(ctx, x - 8, torsoY - 6, person.type, person.color);
+            drawClothing(ctx, x - 8, y - torsoLength - 2, person.type, person.color);
         }
     }
 
