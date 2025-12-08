@@ -388,31 +388,64 @@ function initRecycleAnimation() {
         }
     }
 
+    function drawRoundedRect(ctx, x, y, width, height, radius) {
+        ctx.beginPath();
+        ctx.moveTo(x + radius, y);
+        ctx.lineTo(x + width - radius, y);
+        ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+        ctx.lineTo(x + width, y + height - radius);
+        ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+        ctx.lineTo(x + radius, y + height);
+        ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+        ctx.lineTo(x, y + radius);
+        ctx.quadraticCurveTo(x, y, x + radius, y);
+        ctx.closePath();
+    }
+
     function drawPerson(ctx, person) {
         const { x, y } = person;
-        ctx.lineWidth = 2;
-        ctx.strokeStyle = '#000';
-        ctx.fillStyle = '#f2d0a9';
-        // head
-        ctx.beginPath();
-        ctx.arc(x, y - 12, 4, 0, Math.PI * 2);
+        const bodyWidth = 18;
+        const bodyHeight = 26;
+        const headRadius = 6;
+
+        // torso
+        const torsoX = x - bodyWidth / 2;
+        const torsoY = y - bodyHeight + 4;
+        const torsoGrad = ctx.createLinearGradient(torsoX, torsoY, torsoX, torsoY + bodyHeight);
+        torsoGrad.addColorStop(0, '#1f2a44');
+        torsoGrad.addColorStop(1, '#0f172a');
+        ctx.fillStyle = torsoGrad;
+        ctx.strokeStyle = 'rgba(255,255,255,0.1)';
+        drawRoundedRect(ctx, torsoX, torsoY, bodyWidth, bodyHeight, 6);
         ctx.fill();
         ctx.stroke();
-        // body
+
+        // head
+        ctx.fillStyle = '#f2d0a9';
         ctx.beginPath();
-        ctx.moveTo(x, y - 8);
-        ctx.lineTo(x, y);
-        ctx.moveTo(x, y - 6);
-        ctx.lineTo(x - 5, y - 10);
-        ctx.moveTo(x, y - 6);
-        ctx.lineTo(x + 5, y - 10);
-        ctx.moveTo(x, y);
-        ctx.lineTo(x - 4, y + 8);
-        ctx.moveTo(x, y);
-        ctx.lineTo(x + 4, y + 8);
-        ctx.stroke();
+        ctx.arc(x, torsoY - headRadius + 2, headRadius, 0, Math.PI * 2);
+        ctx.fill();
+
+        // accent collar
+        ctx.fillStyle = '#ff9d5c';
+        drawRoundedRect(ctx, torsoX + 4, torsoY + 4, bodyWidth - 8, 6, 3);
+        ctx.fill();
+
+        // arms
+        ctx.fillStyle = '#1f2a44';
+        drawRoundedRect(ctx, torsoX - 8, torsoY + 6, 8, 12, 4);
+        ctx.fill();
+        drawRoundedRect(ctx, torsoX + bodyWidth, torsoY + 6, 8, 12, 4);
+        ctx.fill();
+
+        // legs
+        drawRoundedRect(ctx, x - 9, y - 6, 8, 14, 3);
+        ctx.fill();
+        drawRoundedRect(ctx, x + 1, y - 6, 8, 14, 3);
+        ctx.fill();
+
         if (!person.picked) {
-            drawClothing(ctx, x - 8, y - 25, person.type, person.color);
+            drawClothing(ctx, x - 8, torsoY - 6, person.type, person.color);
         }
     }
 
@@ -451,42 +484,22 @@ function initRecycleAnimation() {
     function loop() {
         ctx.clearRect(0, 0, W, H);
 
-        // draw metal box hub with bolts
+        // draw sleek hub enclosure
         const hubLeft = hub.x - hub.width / 2;
         const hubTop = hub.y - hub.height / 2;
         ctx.save();
-        ctx.shadowColor = '#000';
-        ctx.shadowBlur = 6;
+        ctx.shadowColor = 'rgba(255, 158, 104, 0.35)';
+        ctx.shadowBlur = 18;
         const hubGrad = ctx.createLinearGradient(hubLeft, hubTop, hubLeft + hub.width, hubTop + hub.height);
-        hubGrad.addColorStop(0, '#b0b0b0');
-        hubGrad.addColorStop(1, '#7a7a7a');
+        hubGrad.addColorStop(0, '#1b2436');
+        hubGrad.addColorStop(1, '#0f172a');
         ctx.fillStyle = hubGrad;
-        ctx.fillRect(hubLeft, hubTop, hub.width, hub.height);
-        ctx.lineWidth = 3;
-        ctx.strokeStyle = '#444';
-        ctx.strokeRect(hubLeft, hubTop, hub.width, hub.height);
+        drawRoundedRect(ctx, hubLeft, hubTop, hub.width, hub.height, 12);
+        ctx.fill();
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+        ctx.stroke();
         ctx.restore();
-
-        // bolts at corners
-        const bolts = [
-            { x: hubLeft + 8, y: hubTop + 8 },
-            { x: hubLeft + hub.width - 8, y: hubTop + 8 },
-            { x: hubLeft + 8, y: hubTop + hub.height - 8 },
-            { x: hubLeft + hub.width - 8, y: hubTop + hub.height - 8 }
-        ];
-        bolts.forEach(b => {
-            ctx.fillStyle = '#ccc';
-            ctx.strokeStyle = '#666';
-            ctx.lineWidth = 2;
-            ctx.beginPath();
-            ctx.arc(b.x, b.y, 4, 0, Math.PI * 2);
-            ctx.fill();
-            ctx.stroke();
-            ctx.fillStyle = '#666';
-            ctx.beginPath();
-            ctx.arc(b.x, b.y, 1.5, 0, Math.PI * 2);
-            ctx.fill();
-        });
 
         if (hubImg.complete) {
             const maxWidth = hub.width * 0.6;
