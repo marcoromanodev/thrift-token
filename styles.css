@@ -112,7 +112,7 @@ section > p:not(.graph-source):not(.total-supply):not(.info-box) {
 }
 .tug-bar.waste {
     right: 0;
-    background: linear-gradient(90deg, #4b5563, #1f2933);
+    background: linear-gradient(90deg, #f87171, #b91c1c);
 }
 .tug-labels {
     display: flex;
