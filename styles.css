@@ -389,11 +389,14 @@ section > p:not(.graph-source):not(.total-supply)::before {
     top: 100%;
     left: 0;
     width: 100%;
-    background-color: #ffffff;
+    background: rgba(12, 16, 24, 0.92);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     margin-top: 0;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
     text-align: center;
     z-index: 901;
+    border-radius: 12px;
+    backdrop-filter: blur(8px);
 }
 .dropdown-menu ul {
     list-style: none;
@@ -405,7 +408,7 @@ section > p:not(.graph-source):not(.total-supply)::before {
     margin: 0 1rem;
 }
 .dropdown-menu ul li a {
-    color: #e6edf5;
+    color: #ffffff;
     text-decoration: none;
     font-weight: 600;
     letter-spacing: 0.02em;
@@ -869,6 +872,7 @@ footer {
     background: #ffffff;
     overflow: hidden;
     box-shadow: 4px 4px 0 #000;
+    color: #0d1117;
 }
 
 .allocation-bar::before {
@@ -887,6 +891,7 @@ footer {
     z-index: 1;
     line-height: 40px;
     font-weight: bold;
+    text-shadow: 0 2px 6px rgba(255, 255, 255, 0.7), 0 2px 6px rgba(0, 0, 0, 0.35);
 }
 
 @keyframes growBar {
@@ -1265,12 +1270,14 @@ footer {
     display: flex;
     align-items: center;
     pointer-events: none;
+    color: #0d1117;
 }
 .ticker-label {
     margin-left: 10px;
     font-weight: bold;
     position: relative;
     z-index: 2;
+    color: #0d1117;
 }
 .ticker-wrapper {
     flex: 1;
@@ -1284,7 +1291,7 @@ footer {
     top: 0;
     width: 60px;
     height: 100%;
-    background: linear-gradient(to right, #fff 0%, rgba(255,255,255,0) 100%);
+    background: linear-gradient(to right, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0) 100%);
     z-index: 1;
     pointer-events: none;
 }
@@ -1294,11 +1301,14 @@ footer {
     will-change: transform;
     animation: ticker 50s linear infinite;
     -webkit-animation: ticker 50s linear infinite;
+    position: relative;
+    z-index: 2;
 }
 .purchase-item {
     padding: 0 1.5rem;
     white-space: nowrap;
     font-weight: bold;
+    color: #0d1117;
 }
 @keyframes ticker {
     from { transform: translateX(0); }
