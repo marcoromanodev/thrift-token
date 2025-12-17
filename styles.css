@@ -134,7 +134,7 @@ section > p:not(.graph-source):not(.total-supply):not(.info-box) {
 .annual-count {
     display: block;
     font-size: 0.8rem;
-    color: #008000;
+    color: #ff4d4d;
 }
 
 .mission-image {
